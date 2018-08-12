@@ -1,7 +1,12 @@
 <template>
   <div class="landing">
-    <h1>{{ message }}</h1>
+    <h1>{{ title }}</h1>
+    <h3>{{ message }}</h3>
+  <div>
+    <a class="btn btn-dark btn-lg" href="#/Signup" role="button">Signup</a>
+    <a class="btn btn-dark btn-lg" href="#/Login" role="button">Login</a>
   </div>
+</div>
 </template>
 
 <style>
@@ -11,7 +16,8 @@
 export default {
   data: function() {
     return {
-      message: "Roam"
+      title: "Roam", 
+      message: "Let's get going..."
     };
   },
   created: function() {},
