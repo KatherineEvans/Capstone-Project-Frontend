@@ -1,22 +1,23 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <div class="card" style="width: 18rem;" v-for="trip in trips">
-      <img class="card-img-top" v-bind:src="trip.image" width="300" alt="Card image cap">
-      <div class="card-body">
-        <h2 class="card-title">{{ trip.name }}</h2>
-        <p class="card-text">{{ trip.city }}, {{ trip.state }}, {{ trip.country }}</p>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Planner: {{ trip.planner }}</li>
-        <li class="list-group-item">Start: {{ trip.start_date }}</li>
-        <li class="list-group-item">End: {{ trip.end_date }}</li>
-      </ul>
-      <div class="card-body">
-        <button type="button" class="btn btn-primary card-link" data-toggle="modal" data-target="#exampleModal" v-on:click="currentTrip = trip">Travelers
-        </button>
-        <a href="#/finance" class="btn btn-secondary card-link">Financial Dashboard</a>
-      </div>
+        <div class="card" style="width: 18rem;" v-for="trip in trips">
+          <img class="card-img-top" v-bind:src="trip.image" width="300" alt="Card image cap">
+          <div class="card-body">
+            <h2 class="card-title">{{ trip.name }}</h2>
+            <p class="card-text">{{ trip.city }}, {{ trip.state }}, {{ trip.country }}</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Planner: {{ trip.planner }}</li>
+            <li class="list-group-item">Start: {{ trip.start_date }}</li>
+            <li class="list-group-item">End: {{ trip.end_date }}</li>
+          </ul>
+          <div class="card-body">
+            <button type="button" class="btn btn-primary card-link" data-toggle="modal" data-target="#exampleModal" v-on:click="currentTrip = trip">Travelers
+            </button>
+            <a :href=" '#/trips/' + trip.id " class="btn btn-secondary card-link">Financial Dashboard</a>
+          </div>
+        </div>
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -39,7 +40,6 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
 

@@ -37,7 +37,7 @@ export default new Router({
       component: Logout
     },
     {
-      path: "/finance",
+      path: "/trips/:id",
       name: "finance",
       component: Finance
     }
