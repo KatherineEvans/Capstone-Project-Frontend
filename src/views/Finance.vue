@@ -1,8 +1,14 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <div v-for="expense in expenses" where >
-      
+      <div class="card" style="width: 18rem;">
+        <h3 class="card-title">Expenses</h3>
+        <div class="card" v-for="expense in expenses">
+          <div class="card-body">
+            <p>${{ expense.amount }} - {{ expense.description }}</p>
+           <!--  <p>{{ expense.category }}</p> -->
+          </div>
+        </div>
     </div>
   </div>
 </template>

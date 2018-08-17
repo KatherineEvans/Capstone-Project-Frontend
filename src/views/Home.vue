@@ -15,7 +15,7 @@
       <div class="card-body">
         <button type="button" class="btn btn-primary card-link" data-toggle="modal" data-target="#exampleModal" v-on:click="currentTrip = trip">Travelers
         </button>
-        <button type="button" class="btn btn-secondary card-link">Financial Dashboard</button>
+        <a href="#/finance" class="btn btn-secondary card-link">Financial Dashboard</a>
       </div>
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
