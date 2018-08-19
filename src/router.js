@@ -6,6 +6,8 @@ import Signup from "./views/Signup.vue";
 import Login from "./views/Login.vue";
 import Logout from "./views/Logout.vue";
 import Finance from "./views/Finance.vue";
+import Itinerary from "./views/Itinerary.vue";
+import FinanceCreate from "./views/FinanceCreate.vue";
 
 Vue.use(Router);
 
@@ -40,6 +42,16 @@ export default new Router({
       path: "/trips/:id",
       name: "finance",
       component: Finance
+    },
+    {
+      path: "/itinerary",
+      name: "itinerary",
+      componenet: Itinerary
+    },
+    {
+      path: "/expenses",
+      name: FinanceCreate,
+      component: FinanceCreate
     }
   ]
 });

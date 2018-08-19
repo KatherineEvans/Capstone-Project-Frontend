@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/Home">Home</router-link> |
-      <router-link to="/Login">Login</router-link> |
-      <router-link to="/Signup">Signup</router-link> |
-      <router-link to="/Logout">Logout</router-link>
+      <router-link to="/home">Home</router-link> |
+      <router-link to="/login">Login</router-link> |
+      <router-link to="/signup">Signup</router-link> |
+      <router-link to="/logout">Logout</router-link>
     </div>
     <router-view/>
   </div>
@@ -29,5 +29,17 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+#card-img-top {
+  float: clear;
+}
+
+body {
+  background-image: url("https://images.unsplash.com/photo-1484383707950-89c8d3276e53?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3a0693ba93ada80cf1b0e2f01d12ebf4&dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb");
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 </style>

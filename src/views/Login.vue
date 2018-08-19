@@ -27,8 +27,8 @@ export default {
   template: "#login-page",
   data: function() {
     return {
-      email: "",
-      password: "",
+      email: "katherine@email.com",
+      password: "password",
       errors: []
     };
   },
@@ -44,7 +44,7 @@ export default {
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + response.data.jwt;
           localStorage.setItem("jwt", response.data.jwt);
-          this.$router.push("/");
+          this.$router.push("/home");
         })
         .catch(error => {
           this.errors = ["Invalid email or password."];
