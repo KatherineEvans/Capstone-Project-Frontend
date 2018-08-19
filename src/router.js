@@ -8,6 +8,7 @@ import Logout from "./views/Logout.vue";
 import Finance from "./views/Finance.vue";
 import Itinerary from "./views/Itinerary.vue";
 import FinanceCreate from "./views/FinanceCreate.vue";
+import FinanceEdit from "./views/FinanceEdit.vue";
 
 Vue.use(Router);
 
@@ -52,6 +53,11 @@ export default new Router({
       path: "/expenses",
       name: FinanceCreate,
       component: FinanceCreate
+    },
+    {
+      path: "/expenses/:id",
+      name: FinanceEdit,
+      component: FinanceEdit
     }
   ]
 });

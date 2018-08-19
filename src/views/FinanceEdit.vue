@@ -2,7 +2,7 @@
   <div class="expenseCreate container">
     <div class="">
       <form v-on:submit.prevent="submit()">
-        <h1>Add Expense</h1>
+        <h1>Edit Expense</h1>
         <ul>
           <li class="text-danger" v-for="error in errors">{{ error }}</li>
         </ul>
@@ -61,6 +61,7 @@ import axios from "axios";
 export default {
   data: function() {
     return {
+      expense: {},
       categories: [],
       trips: [],
       description: "",
@@ -71,7 +72,7 @@ export default {
       expense_type: "",
       date: "",
       itinerary_id: "",
-      trip: this.trip,
+      trip: "",
       errors: []
     };
   },
@@ -89,6 +90,20 @@ export default {
           this.trips = response.data.trips;
         }.bind(this)
       );
+    }
+    {
+      axios
+        .get("http://localhost:3000/api/expenses/" + this.$route.params.id)
+        .then(responseTwo => {
+          console.log(responseTwo);
+          this.expense = responseTwo.data;
+          this.amount = this.expense.amount;
+          this.description = this.expense.description;
+          this.category_id = this.expense.category_id;
+          this.expense_type = this.expense.expense_type;
+          this.date = this.expense.date;
+          this.trip_id = this.trip_id;
+        });
     }
   },
   methods: {

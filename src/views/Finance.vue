@@ -4,13 +4,14 @@
     <div class="finance-header container">
       <h3>{{ trip.name }}</h3>
       <h6>{{ trip.city }}, {{ trip.state }}, {{ trip.country }}</h6>
-    <button type="button" class="btn btn-dark" onClick="window.location = '#/expenses';">Add Expense</button>
+    <button type="button" class="btn btn-dark" onClick="window.location = '#/expenses';" v-model="trip.id">Add Expense</button>
     </div>
       <div class="card" style="width: 18rem;">
         <h3 class="card-title">Expenses</h3>
         <div class="card" v-for="expense in trip.expenses">
           <div class="card-body">
             <p>${{ expense.amount }} - {{ expense.description }}</p>
+            <a :href=" '#/expenses/' + expense.id " class="btn btn btn-link card-link">Edit</a>
           </div>
         </div>
     </div>
