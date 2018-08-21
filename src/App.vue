@@ -29,9 +29,22 @@
   color: #42b983;
 }
 
-#card-img-top {
-  float: clear;
+.row {
+  padding: 15px 15px 15px 15px;
 }
+
+.btn:hover {
+  transform: translateY(-.3rem);
+  box-shadow: 0 1rem 2rem rgba(0,0,0,.2);
+  /*first value is X axis, second is Y axis, thrid is blur, fourth is color!*/
+}
+
+.card:hover {
+  transform: translateY(-1rem);
+  box-shadow: 0 1rem 2rem rgba(0,0,0,.2);
+  /*first value is X axis, second is Y axis, thrid is blur, fourth is color!*/
+}
+
 
 body {
   background-image: url("https://images.unsplash.com/photo-1484383707950-89c8d3276e53?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3a0693ba93ada80cf1b0e2f01d12ebf4&dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb");
@@ -40,4 +53,5 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 </style>

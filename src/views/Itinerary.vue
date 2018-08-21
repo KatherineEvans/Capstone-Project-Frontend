@@ -20,12 +20,13 @@ export default {
     };
   },
   created: function() {
-    axios.get("http://localhost:3000/api/itinerary").then(
-      function(response) {
-        console.log(response);
-        this.itinerary = response.data.itineraries;
-      }.bind(this)
-    );
+    axios
+      .get("http://localhost:3000/api/itinerary").then(
+        function(response) {
+          console.log(response);
+          this.itineraries = response.data.itineraries;
+        }.bind(this)
+      );
   },
   methods: {},
   computed: {}
