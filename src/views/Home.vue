@@ -7,18 +7,18 @@
         <img id="card-img-modal" class="card-img-top" v-bind:src="trip.image" height="200" alt="Card image cap">
         <div class="card-body">
           <h2 class="card-title">{{ trip.name }}</h2>
-          <p class="card-text">{{ trip.city }}, {{ trip.state }}, {{ trip.country }}</p>
+          <h6 class="card-text">{{ trip.city }}, {{ trip.state }}, {{ trip.country }}</h6>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Planner: {{ trip.planner }}</li>
-          <li class="list-group-item">Start: {{ trip.start_date }}</li>
-          <li class="list-group-item">End: {{ trip.end_date }}</li>
+          <li class="list-group-item"><span class="title-span">Planner: </span>{{ trip.planner }}</li>
+          <li class="list-group-item"><span class="title-span">Start: </span>{{ trip.start_date }}</li>
+          <li class="list-group-item"><span class="title-span">End: </span>{{ trip.end_date }}</li>
         </ul>
-        <div class="card-body">
-          <button type="button" class="btn btn-primary card-link" data-toggle="modal" data-target="#exampleModal" v-on:click="itineraries = trip.itineraries">Travelers
+        <div class="card-body card-body-buttons">
+          <button type="button" class="btn btn-primary card-link home-card-link-1" data-toggle="modal" data-target="#exampleModal" v-on:click="currentTrip = trip">Travelers
           </button>
-          <a href="#/itinerary/" v-on:click="currentItinerary = trip"class="btn btn-secondary card-link">Itinerary</a>
-          <a :href=" '#/trips/' + trip.id " class="btn btn-secondary card-link">Financial Dashboard</a>
+          <a href="#/itinerary" v-on:click="currentItinerary = trip"class="btn btn-secondary card-link home-card-link-2">Itinerary</a>
+          <a :href=" '#/trips/' + trip.id " class="btn btn-secondary card-link home-card-link-3">Financial Dashboard</a>
         </div>
       </div>
     </div>
