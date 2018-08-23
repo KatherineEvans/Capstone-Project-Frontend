@@ -1,5 +1,9 @@
 <template>
   <div class="expenseCreate container">
+    <div id="nav">
+      <router-link to="/home">Home</router-link> |
+      <router-link to="/logout">Logout</router-link>
+    </div>
     <div class="">
       <form v-on:submit.prevent="submit()">
         <h1>Add Expense</h1>

@@ -1,9 +1,13 @@
 <template>
   <div class="home container">
+    <div id="nav">
+      <router-link to="/home">Home</router-link> |
+      <router-link to="/logout">Logout</router-link>
+    </div>
     <h1>{{ message }}</h1>
     <div class="row">
-      <div class="col-md-4" v-for="trip in trips">
-      <div class="card" style="width: 20rem;">
+      <div class="col-lg-4" v-for="trip in trips">
+      <div class="card">
         <img id="card-img-modal" class="card-img-top" v-bind:src="trip.image" height="200" alt="Card image cap">
         <div class="card-body">
           <h2 class="card-title">{{ trip.name }}</h2>
@@ -17,7 +21,7 @@
         <div class="card-body card-body-buttons">
           <button type="button" class="btn btn-primary card-link home-card-link-1" data-toggle="modal" data-target="#exampleModal" v-on:click="currentTrip = trip">Travelers
           </button>
-          <a href="#/itinerary" v-on:click="currentItinerary = trip"class="btn btn-secondary card-link home-card-link-2">Itinerary</a>
+          <a href="#/itinerary" v-on:click="currentTrip = trip"class="btn btn-secondary card-link home-card-link-2">Itinerary</a>
           <a :href=" '#/trips/' + trip.id " class="btn btn-secondary card-link home-card-link-3">Financial Dashboard</a>
         </div>
       </div>
@@ -32,11 +36,11 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <div v-for="traveler in currentTrip.travelers">
-              <p>{{ traveler.first_name }} {{ traveler.last_name}}</p>
+          <div>
+            <div class="modal-body" v-for="traveler in currentTrip.travelers">
+             <img class="travelerImage" v-bind:src="traveler.user_photo">
+              <p class="modal-traveler-name">{{ traveler.first_name }} {{ traveler.last_name}}</p>
               <a class="emailLink" :href="'mailto:' + traveler.email">{{ traveler.email }}</a>
-              <img class="travelerImage" v-bind:src="traveler.user_photo" width="150">
             </div>
           </div>
           <div class="modal-footer">

@@ -1,14 +1,56 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/home">Home</router-link> |
-      <router-link to="/logout">Logout</router-link>
-    </div>
     <router-view/>
   </div>
 </template>
 
 <style>
+.landing {
+  padding: 35px;
+  border: 15px;
+  background-color: rgba(168, 77, 62, 0.75);
+  margin-top: 150px;
+  margin-left: 150px;
+  margin-right: 150px;
+  margin-bottom: 50px;
+  box-shadow: 10px 10px 16px -10px #55433E;
+}
+/*7F413D FEE8B7 2F2C2F*/
+/*rgba(168, 77, 62, 0.5)*/
+.landing h1 {
+  font-size: 8em;
+  margin-bottom: -20px;
+  color: #FFFAE7;
+}
+.landing h3 {
+  font-size: 40px;
+  font-style: italic;
+  color: #FFFAE7;
+}
+.loginLable {
+  color: #FFFAE7;
+  font-weight: bold;
+
+}
+.signupBtn {
+  margin-right: 15px;
+  background-color: #55433E;
+}
+.loginBtn {
+  background-color: #55433E;
+  border-color: #55433E;
+}
+
+.signupBtn:hover {
+  text-decoration: underline;
+}
+.loginBtn:hover {
+  text-decoration: underline;
+}
+.card{
+  margin: 10px;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -19,40 +61,30 @@
 #nav {
   padding: 30px;
 }
-
 #nav a {
   font-weight: bold;
   color: #2c3e50;
 }
-
 #nav a.router-link-exact-active {
-  color: #42b983;
+  text-decoration: underline;
 }
-
 .row {
   padding: 15px 15px 15px 15px;
 }
-
 .btn:hover {
   transform: translateY(-.3rem);
   box-shadow: 0 1rem 2rem rgba(0,0,0,.2);
   /*first value is X axis, second is Y axis, thrid is blur, fourth is color!*/
 }
-
 .card:hover {
-  transform: translateY(-1rem);
-  box-shadow: 0 1rem 2rem rgba(0,0,0,.2);
-  /*first value is X axis, second is Y axis, thrid is blur, fourth is color!*/
+  box-shadow: 0 1.5rem 2.5rem rgba(0,0,0,.5);
 }
-
 #card-img-modal {
   padding: 10px;
 }
-
 .title-span {
   font-weight: bold;
 }
-
 .home-card-link-1 {
   float: center;
 }
@@ -63,7 +95,32 @@
   float: center;
   margin: 15px;
 }
-
+.modal-body {
+  margin: 7.5px;
+  padding: 7.5px;
+}
+.emailLink {
+  font-weight: bold;
+}
+.travelerImage {
+  width: 150px;
+  padding: 7.5px;
+}
+.modal-traveler-name {
+  margin: 0;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.modal-body:hover {
+  background-color: #F0EEEF;
+}
+.expenseCard {
+  background-color: rgba(255, 250, 231, 0.75);
+}
+.doughnut-chart {
+  width: 100px;
+  height: 100px;
+}
 body {
   background-image: url("https://images.unsplash.com/photo-1484383707950-89c8d3276e53?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3a0693ba93ada80cf1b0e2f01d12ebf4&dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb");
   height: 100%;
@@ -71,6 +128,9 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   padding: 20px;
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-attachment: fixed;
 }
 
 </style>
