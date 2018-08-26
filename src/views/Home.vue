@@ -21,7 +21,7 @@
         <div class="card-body card-body-buttons">
           <button type="button" class="btn btn-primary card-link home-card-link-1" data-toggle="modal" data-target="#exampleModal" v-on:click="currentTrip = trip">Travelers
           </button>
-          <a href="#/itinerary" v-on:click="currentTrip = trip"class="btn btn-secondary card-link home-card-link-2">Itinerary</a>
+          <a :href="'#/trips/' + trip.id + '/itinerary'" class="btn btn-secondary card-link home-card-link-2">Itinerary</a>
           <a :href=" '#/trips/' + trip.id " class="btn btn-secondary card-link home-card-link-3">Financial Dashboard</a>
         </div>
       </div>

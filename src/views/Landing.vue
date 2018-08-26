@@ -17,7 +17,7 @@ export default {
   data: function() {
     return {
       title: "Roam", 
-      message: "Let's get going..."
+      message: "Travel Wallet"
     };
   },
   created: function() {},

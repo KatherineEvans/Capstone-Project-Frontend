@@ -55,7 +55,7 @@ export default new Router({
       component: FinanceEdit
     },
     {
-      path: "/itinerary",
+      path: "/trips/:id/itinerary",
       name: Itinerary,
       component: Itinerary
     }

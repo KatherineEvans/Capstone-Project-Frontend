@@ -50,7 +50,33 @@
 .card{
   margin: 10px;
 }
-
+.financeDashboardCard {
+  float: left;
+  width: 200px;
+}
+.financeDashboardCharts {
+  float: right;
+  margin-right: 20px;
+  width: calc(100% - 320px);
+}
+.buttonGroupPersonal {
+  margin-top: 10px;
+}
+.sumCard {
+  width: 100%;
+  background-color: rgba(255, 250, 231, 0.85);
+  border-color: transparent;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 47px;
+  border-color: grey;
+  border-radius: 25px;
+  font-size: 18px;
+  padding: 10px;
+}
+.bold {
+  font-weight: bold;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -115,11 +141,34 @@
   background-color: #F0EEEF;
 }
 .expenseCard {
+  background-color: rgba(255, 250, 231, 0.85);
+}
+#doughnut-chart {
+  width: 100px;
+  height: 150px;
+  margin: 10px;
+  background-color: rgba(255, 250, 231, 0.85);
+  border-radius: 25px;
+}
+#line-chart {
+  width: 100px;
+  height: 150px;
+  margin: 10px;
+  background-color: rgba(255, 250, 231, 0.85);
+  border-radius: 25px;
+}
+#bar-chart-grouped {
+  width: 100px;
+  height: 150px;
+  margin: 10px;
+  background-color: rgba(255, 250, 231, 0.85);
+  border-radius: 25px;
+}
+.quick-look .card {
   background-color: rgba(255, 250, 231, 0.75);
 }
-.doughnut-chart {
-  width: 100px;
-  height: 100px;
+.bold {
+  text-decoration: bold;
 }
 body {
   background-image: url("https://images.unsplash.com/photo-1484383707950-89c8d3276e53?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3a0693ba93ada80cf1b0e2f01d12ebf4&dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb");
@@ -132,5 +181,34 @@ body {
   background-position: right top;
   background-attachment: fixed;
 }
-
+ul.timeline {
+    list-style-type: none;
+    position: relative;
+    background-color: rgba(255, 250, 231, 0.85);
+    padding: 35px;
+    border-radius: 25px;
+    font-size: 20px;
+}
+ul.timeline:before {
+    content: ' ';
+    background: black;
+    display: inline-block;
+    position: absolute;
+    left: 29px;
+    width: 2px;
+    height: 90%;
+    z-index: 400;
+}
+ul.timeline > li:before {
+    content: ' ';
+    background: white;
+    display: inline-block;
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid black;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    z-index: 400;
+}
 </style>
