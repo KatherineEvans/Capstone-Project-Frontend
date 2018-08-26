@@ -29,10 +29,10 @@
         <div class="form-group">
           <label>Expense Type: </label>
           <select v-model="expense_type">
-            <option value="1">
+            <option value="Personal">
               Personal Expense
             </option>
-            <option value="2">
+            <option value="Group">
               Group Expense
             </option>
           </select>
@@ -123,9 +123,12 @@ export default {
         itinerary_id: this.itinerary_id
       };
       axios
-        .post("http://localhost:3000/api/expenses", params)
+        .patch(
+          "http://localhost:3000/api/expenses/" + this.$route.params.id,
+          params
+        )
         .then(response => {
-          this.$router.push("/home");
+          this.$router.go(-1);
         })
         .catch(error => {
           this.errors = error.response.data.errors;
