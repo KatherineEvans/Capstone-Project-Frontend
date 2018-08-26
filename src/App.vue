@@ -167,6 +167,30 @@
   border-radius: 25px;
   padding: 10px;
 }
+#user-doughnut-chart {
+  width: 100px;
+  height: 150px;
+  margin: 10px;
+  background-color: rgba(255, 250, 231, 0.85);
+  border-radius: 25px;
+  padding: 10px;
+}
+#user-line-chart {
+  width: 100px;
+  height: 150px;
+  margin: 10px;
+  background-color: rgba(255, 250, 231, 0.85);
+  border-radius: 25px;
+  padding: 10px;
+}
+#user-bar-chart-grouped {
+  width: 100px;
+  height: 150px;
+  margin: 10px;
+  background-color: rgba(255, 250, 231, 0.85);
+  border-radius: 25px;
+  padding: 10px;
+}
 .quick-look .card {
   background-color: rgba(255, 250, 231, 0.75);
 }

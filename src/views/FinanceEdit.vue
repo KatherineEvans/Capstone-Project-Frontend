@@ -106,7 +106,7 @@ export default {
           this.category_id = this.expense.category_id;
           this.expense_type = this.expense.expense_type;
           this.date = this.expense.date;
-          this.trip_id = this.trip_id;
+          this.trip_id = this.expense.trip_id;
         });
     }
   },

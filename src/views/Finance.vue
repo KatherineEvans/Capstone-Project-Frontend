@@ -9,7 +9,11 @@
       <h3>{{ trip.name }}</h3>
       <h6>{{ trip.city }}, {{ trip.state }}, {{ trip.country }}</h6>
     <button type="button" class="btn btn-dark" onClick="window.location = '#/expenses';" v-model="trip.id">Add Expense</button>
-    <div><button type="button" class="btn btn-dark buttonGroupPersonal" onClick="">View Your Expenses</button></div>
+    <div>
+      <button type="button" class="btn btn-dark buttonGroupPersonal" v-on:click="toggleOnlyViewCurrentUserExpenses()">
+        {{onlyViewCurrentUserExpenses ? "View All Expenses" : "View Your Expenses"}}
+      </button>
+    </div>
     </div>
       <div class="financeDashboardCard" style="width: 18rem;">
         <h3 class="card-title">Expenses</h3>
@@ -21,15 +25,25 @@
           </div>
         </div>
     </div>
-    <div class="financeDashboardCharts">
+    <div class="financeDashboardCharts" v-show="!onlyViewCurrentUserExpenses">
       <div class="sumCard">
-        <div><span class="bold">Total Spent on Trip: </span>$INSERT SUM</div>
+        <div><span class="bold">Total Spent on Trip: </span>${{ totalSum }}</div>
         <div><span class="bold">Total Personal Spending: </span>$INSERT SUM</div>
         <div class="finance-list-group-item"><span class="bold">Total Group Spending: </span>INSERT SUM</div>
       </div>
       <canvas id="doughnut-chart"></canvas>
       <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
       <canvas id="line-chart" width="800" height="450"></canvas>
+    </div>
+    <div class="financeDashboardCharts" v-show="onlyViewCurrentUserExpenses">
+      <div class="sumCard">
+        <div><span class="bold">USER Total Spent on Trip: </span>${{ totalSum }}</div>
+        <div><span class="bold">USER Total Personal Spending: </span>$INSERT SUM</div>
+        <div class="finance-list-group-item"><span class="bold">USER Total Group Spending: </span>INSERT SUM</div>
+      </div>
+      <canvas id="user-doughnut-chart"></canvas>
+      <canvas id="user-bar-chart-grouped" width="800" height="450"></canvas>
+      <canvas id="user-line-chart" width="800" height="450"></canvas>
     </div>
   </div>
 </template>
@@ -47,9 +61,10 @@ export default {
       message: "Financial Dashboard",
       trip: {},
       itineraries: [],
-      totalSum: [],
-      personalSum: [],
-      groupSum: []
+      onlyViewCurrentUserExpenses: false,
+      totalSum: 0,
+      personalSum: 0,
+      groupSum: 0
       // expenses: []
     };
   },
@@ -65,210 +80,422 @@ export default {
       .then(response => {
         console.log("expenses", response.data.expenses);
         this.trip = response.data;
-
-        var expensesByCategory = {};
-
-        this.trip.expenses.forEach(function(expense) {
-          console.log(
-            expense.amount,
-            expense.category_name,
-            expensesByCategory
-          );
-          if (!expensesByCategory[expense.category_name]) {
-            expensesByCategory[expense.category_name] = parseFloat(
-              expense.amount
-            );
-          } else {
-            expensesByCategory[expense.category_name] += parseFloat(
-              expense.amount
-            );
-          }
-        });
-
-        var personalExpensesByCategory = {};
-
-        this.trip.personal_expenses.forEach(function(expense) {
-          console.log(
-            "PERSONAL EXPENSES",
-            expense,
-            expense.personal_amount,
-            expense.personal_category_name,
-            expense.personal_expense_type,
-            expense.personal_expensesByCategory
-          );
-          if (!personalExpensesByCategory[expense.personal_category_name]) {
-            personalExpensesByCategory[
-              expense.personal_category_name
-            ] = parseFloat(expense.personal_amount);
-          } else {
-            personalExpensesByCategory[
-              expense.personal_category_name
-            ] += parseFloat(expense.personal_amount);
-          }
-        });
-
-        var groupExpensesByCategory = {};
-
-        this.trip.group_expenses.forEach(function(expense) {
-          console.log(
-            "GROUP EXPENSES",
-            expense,
-            expense.group_amount,
-            expense.group_category_name,
-            expense.group_expense_type,
-            expense.group_expensesByCategory
-          );
-          if (!groupExpensesByCategory[expense.group_category_name]) {
-            groupExpensesByCategory[expense.group_category_name] = parseFloat(
-              expense.group_amount
-            );
-          } else {
-            groupExpensesByCategory[expense.group_category_name] += parseFloat(
-              expense.group_amount
-            );
-          }
-        });
-
-        var expensesByDate = {};
-
-        this.trip.expenses.forEach(function(expense) {
-          console.log(expense.date, expense.amount, expensesByDate);
-          if (!expensesByDate[expense.date]) {
-            expensesByDate[expense.date] = parseFloat(expense.amount);
-          } else {
-            expensesByDate[expense.date] += parseFloat(expense.amount);
-          }
-        });
-
-        var groupExpensesByDate = {};
-
-        this.trip.group_expenses.forEach(function(expense) {
-          console.log("GROUP DATE", 
-            expense.group_date, 
-            expense.group_amount);
-          if (!groupExpensesByDate[expense.group_date]) {
-            groupExpensesByDate[expense.group_date] = parseFloat(
-              expense.group_amount
-            );
-          } else {
-            groupExpensesByDate[expense.group_date] += parseFloat(
-              expense.group_amount
-            );
-          }
-        });
-
-        var personalExpensesByDate = {};
-
-        this.trip.personal_expenses.forEach(function(expense) {
-          console.log("PERSONAL DATE", 
-            expense.personal_date, 
-            expense.personal_amount);
-          if (!personalExpensesByDate[expense.personal_date]) {
-            personalExpensesByDate[expense.personal_date] = parseFloat(
-              expense.personal_amount
-            );
-          } else {
-            personalExpensesByDate[expense.personal_date] += parseFloat(
-              expense.personal_amount
-            );
-          }
-        });
-
-        new Chart(document.getElementById("doughnut-chart"), {
-          type: "doughnut",
-          data: {
-            labels: Object.keys(expensesByCategory),
-            datasets: [
-              {
-                label: "Population (millions)",
-                backgroundColor: [
-                  "#3e95cd",
-                  "#8e5ea2",
-                  "#3cba9f",
-                  "#e8c3b9",
-                  "#c45850",
-                  "black"
-                ],
-                data: Object.values(expensesByCategory)
-              }
-            ]
-          },
-          options: {
-            title: {
-              display: true,
-              text: "Total Spending by Category"
-            }
-          }
-        });
-
-        new Chart(document.getElementById("bar-chart-grouped"), {
-          type: "bar",
-          data: {
-            labels: [
-              "Travel",
-              "Lodging",
-              "Food & Bev",
-              "Entertainment",
-              "Shopping",
-              "Misc. Expenses"
-            ],
-            datasets: [
-              {
-                label: "Personal",
-                backgroundColor: "#3e95cd",
-                data: Object.values(personalExpensesByCategory)
-              },
-              {
-                label: "Group",
-                backgroundColor: "#8e5ea2",
-                data: Object.values(groupExpensesByCategory)
-              }
-            ]
-          },
-          options: {
-            title: {
-              display: true,
-              text: "Spending by Category - Group vs. Personal"
-            }
-          }
-        });
-
-        new Chart(document.getElementById("line-chart"), {
-          type: "line",
-          data: {
-            labels: Object.keys(expensesByDate),
-            datasets: [
-              {
-                data: Object.values(expensesByDate),
-                label: "Total",
-                borderColor: "#3e95cd",
-                fill: false
-              },
-              {
-                data: Object.values(personalExpensesByDate),
-                label: "Personal",
-                borderColor: "#8e5ea2",
-                fill: false
-              },
-              {
-                data: Object.values(groupExpensesByDate),
-                label: "Group",
-                borderColor: "#3cba9f",
-                fill: false
-              }
-            ]
-          },
-          options: {
-            title: {
-              display: true,
-              text: "Spending Per Day"
-            }
-          }
-        });
+        this.createChartTotalSpendingByCategory();
+        this.createChartTotalSpendingGroupVsPersonal();
+        this.createChartTotalSpendingPerDay();
+        this.createUserChartTotalSpendingByCategory();
+        this.createUserChartTotalSpendingGroupVsPersonal();
+        this.createUserChartTotalSpendingPerDay();
         //add new charts before this set of puncuation marks
       });
+    this.totalSum = 100;
   },
-  methods: {},
-  computed: {}
+  methods: {
+    createChartTotalSpendingByCategory: function() {
+      new Chart(document.getElementById("doughnut-chart"), {
+        type: "doughnut",
+        data: {
+          labels: Object.keys(this.expensesByCategory),
+          datasets: [
+            {
+              label: "Population (millions)",
+              backgroundColor: [
+                "#3e95cd",
+                "#8e5ea2",
+                "#3cba9f",
+                "#e8c3b9",
+                "#c45850",
+                "black"
+              ],
+              data: Object.values(this.expensesByCategory)
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Total Spending by Category"
+          }
+        }
+      });
+    },
+    createChartTotalSpendingGroupVsPersonal: function() {
+      new Chart(document.getElementById("bar-chart-grouped"), {
+        type: "bar",
+        data: {
+          labels: [
+            "Travel",
+            "Lodging",
+            "Food & Bev",
+            "Entertainment",
+            "Shopping",
+            "Misc. Expenses"
+          ],
+          datasets: [
+            {
+              label: "Personal",
+              backgroundColor: "#3e95cd",
+              data: Object.values(this.personalExpensesByCategory)
+            },
+            {
+              label: "Group",
+              backgroundColor: "#8e5ea2",
+              data: Object.values(this.groupExpensesByCategory)
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Spending by Category - Group vs. Personal"
+          }
+        }
+      });
+    },
+    createChartTotalSpendingPerDay: function() {
+      new Chart(document.getElementById("line-chart"), {
+        type: "line",
+        data: {
+          labels: Object.keys(this.expensesByDate),
+          datasets: [
+            {
+              data: Object.values(this.expensesByDate),
+              label: "Total",
+              borderColor: "#3e95cd",
+              fill: false
+            },
+            {
+              data: Object.values(this.personalExpensesByDate),
+              label: "Personal",
+              borderColor: "#8e5ea2",
+              fill: false
+            },
+            {
+              data: Object.values(this.groupExpensesByDate),
+              label: "Group",
+              borderColor: "#3cba9f",
+              fill: false
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Spending Per Day"
+          }
+        }
+      });
+    },
+    createUserChartTotalSpendingByCategory: function() {
+      new Chart(document.getElementById("user-doughnut-chart"), {
+        type: "doughnut",
+        data: {
+          labels: Object.keys(this.userExpensesByCategory),
+          datasets: [
+            {
+              label: "Population (millions)",
+              backgroundColor: [
+                "#3e95cd",
+                "#8e5ea2",
+                "#3cba9f",
+                "#e8c3b9",
+                "#c45850",
+                "black"
+              ],
+              data: Object.values(this.userExpensesByCategory)
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Total Spending by Category"
+          }
+        }
+      });
+    },
+    createUserChartTotalSpendingGroupVsPersonal: function() {
+      new Chart(document.getElementById("user-bar-chart-grouped"), {
+        type: "bar",
+        data: {
+          labels: [
+            "Travel",
+            "Lodging",
+            "Food & Bev",
+            "Entertainment",
+            "Shopping",
+            "Misc. Expenses"
+          ],
+          datasets: [
+            {
+              label: "Personal",
+              backgroundColor: "#3e95cd",
+              data: Object.values(this.userPersonalExpensesByCategory)
+            },
+            {
+              label: "Group",
+              backgroundColor: "#8e5ea2",
+              data: Object.values(this.userGroupExpensesByCategory)
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Spending by Category - Group vs. Personal"
+          }
+        }
+      });
+    },
+    createUserChartTotalSpendingPerDay: function() {
+      new Chart(document.getElementById("user-line-chart"), {
+        type: "line",
+        data: {
+          labels: Object.keys(this.userExpensesByDate),
+          datasets: [
+            {
+              data: Object.values(this.userExpensesByDate),
+              label: "Total",
+              borderColor: "#3e95cd",
+              fill: false
+            },
+            {
+              data: Object.values(this.userPersonalExpensesByDate),
+              label: "Personal",
+              borderColor: "#8e5ea2",
+              fill: false
+            },
+            {
+              data: Object.values(this.userGroupExpensesByDate),
+              label: "Group",
+              borderColor: "#3cba9f",
+              fill: false
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Spending Per Day"
+          }
+        }
+      });
+    },
+    toggleOnlyViewCurrentUserExpenses: function() {
+      this.onlyViewCurrentUserExpenses = !this.onlyViewCurrentUserExpenses;
+    }
+  },
+  computed: {
+    expensesByCategory: function() {
+      var expensesByCategory = {};
+      this.trip.expenses.forEach(function(expense) {
+        console.log(expense.amount, expense.category_name, expensesByCategory);
+        if (!expensesByCategory[expense.category_name]) {
+          expensesByCategory[expense.category_name] = parseFloat(
+            expense.amount
+          );
+        } else {
+          expensesByCategory[expense.category_name] += parseFloat(
+            expense.amount
+          );
+        }
+      });
+      return expensesByCategory;
+    },
+    userExpensesByCategory: function() {
+      var userExpensesByCategory = {};
+      this.trip.current_user_expenses.forEach(function(expense) {
+        console.log(
+          "CURRENT USER",
+          expense.current_user_expense_amount,
+          expense.category_name,
+          userExpensesByCategory
+        );
+        if (!userExpensesByCategory[expense.category_name]) {
+          userExpensesByCategory[expense.category_name] = parseFloat(
+            expense.amount
+          );
+        } else {
+          userExpensesByCategory[expense.category_name] += parseFloat(
+            expense.amount
+          );
+        }
+      });
+      return userExpensesByCategory;
+    },
+    personalExpensesByCategory: function() {
+      var personalExpensesByCategory = {};
+      this.trip.personal_expenses.forEach(function(expense) {
+        console.log(
+          "PERSONAL EXPENSES",
+          expense,
+          expense.personal_amount,
+          expense.personal_category_name,
+          expense.personal_expense_type,
+          expense.personal_expensesByCategory
+        );
+        if (!personalExpensesByCategory[expense.personal_category_name]) {
+          personalExpensesByCategory[
+            expense.personal_category_name
+          ] = parseFloat(expense.personal_amount);
+        } else {
+          personalExpensesByCategory[
+            expense.personal_category_name
+          ] += parseFloat(expense.personal_amount);
+        }
+      });
+      return personalExpensesByCategory;
+    },
+    userPersonalExpensesByCategory: function() {
+      var userPersonalExpensesByCategory = {};
+      this.trip.current_user_personal_expenses.forEach(function(expense) {
+        console.log(
+          expense.amount,
+          expense.category_name, //category_name doesn't exist
+          expense.expense_type
+        );
+        if (!userPersonalExpensesByCategory[expense.category_name]) {
+          userPersonalExpensesByCategory[expense.category_name] = parseFloat(
+            expense.amount
+          );
+        } else {
+          userPersonalExpensesByCategory[expense.category_name] += parseFloat(
+            expense.amount
+          );
+        }
+      });
+      return userPersonalExpensesByCategory;
+    },
+    groupExpensesByCategory: function() {
+      var groupExpensesByCategory = {};
+      this.trip.group_expenses.forEach(function(expense) {
+        console.log(
+          "GROUP EXPENSES",
+          expense,
+          expense.group_amount,
+          expense.group_category_name,
+          expense.group_expense_type,
+          expense.group_expensesByCategory
+        );
+        if (!groupExpensesByCategory[expense.group_category_name]) {
+          groupExpensesByCategory[expense.group_category_name] = parseFloat(
+            expense.group_amount
+          );
+        } else {
+          groupExpensesByCategory[expense.group_category_name] += parseFloat(
+            expense.group_amount
+          );
+        }
+      });
+      return groupExpensesByCategory;
+    },
+    userGroupExpensesByCategory: function() {
+      var userGroupExpensesByCategory = {};
+      this.trip.current_user_group_expenses.forEach(function(expense) {
+        console.log(
+          expense,
+          expense.amount,
+          expense.category_name, //category name doesn't exist
+          expense.expense_type
+        );
+        if (!userGroupExpensesByCategory[expense.category_name]) {
+          userGroupExpensesByCategory[expense.category_name] = parseFloat(
+            expense.amount
+          );
+        } else {
+          userGroupExpensesByCategory[expense.category_name] += parseFloat(
+            expense.amount
+          );
+        }
+      });
+      return userGroupExpensesByCategory;
+    },
+    expensesByDate: function() {
+      var expensesByDate = {};
+      this.trip.expenses.forEach(function(expense) {
+        console.log(expense.date, expense.amount, expensesByDate);
+        if (!expensesByDate[expense.date]) {
+          expensesByDate[expense.date] = parseFloat(expense.amount);
+        } else {
+          expensesByDate[expense.date] += parseFloat(expense.amount);
+        }
+      });
+      return expensesByDate;
+    },
+    userExpensesByDate: function() {
+      var userExpensesByDate = {};
+      this.trip.current_user_expenses.forEach(function(expense) {
+        console.log(expense.date, expense.amount);
+        if (!userExpensesByDate[expense.date]) {
+          userExpensesByDate[expense.date] = parseFloat(expense.amount);
+        } else {
+          userExpensesByDate[expense.date] += parseFloat(expense.amount);
+        }
+      });
+      return userExpensesByDate;
+    },
+    groupExpensesByDate: function() {
+      var groupExpensesByDate = {};
+      this.trip.group_expenses.forEach(function(expense) {
+        console.log("GROUP DATE", expense.group_date, expense.group_amount);
+        if (!groupExpensesByDate[expense.group_date]) {
+          groupExpensesByDate[expense.group_date] = parseFloat(
+            expense.group_amount
+          );
+        } else {
+          groupExpensesByDate[expense.group_date] += parseFloat(
+            expense.group_amount
+          );
+        }
+      });
+      return groupExpensesByDate;
+    },
+    userGroupExpensesByDate: function() {
+      var userGroupExpensesByDate = {};
+      this.trip.current_user_group_expenses.forEach(function(expense) {
+        console.log(expense.date, expense.amount);
+        if (!userGroupExpensesByDate[expense.date]) {
+          userGroupExpensesByDate[expense.date] = parseFloat(expense.amount);
+        } else {
+          userGroupExpensesByDate[expense.date] += parseFloat(expense.amount);
+        }
+      });
+      return userGroupExpensesByDate;
+    },
+    personalExpensesByDate: function() {
+      var personalExpensesByDate = {};
+      this.trip.personal_expenses.forEach(function(expense) {
+        console.log(
+          "PERSONAL DATE",
+          expense.personal_date,
+          expense.personal_amount
+        );
+        if (!personalExpensesByDate[expense.personal_date]) {
+          personalExpensesByDate[expense.personal_date] = parseFloat(
+            expense.personal_amount
+          );
+        } else {
+          personalExpensesByDate[expense.personal_date] += parseFloat(
+            expense.personal_amount
+          );
+        }
+      });
+      return personalExpensesByDate;
+    },
+    userPersonalExpensesByDate: function() {
+      var userPersonalExpensesByDate = {};
+      this.trip.current_user_personal_expenses.forEach(function(expense) {
+        console.log(expense.date, expense.amount);
+        if (!userPersonalExpensesByDate[expense.date]) {
+          userPersonalExpensesByDate[expense.date] = parseFloat(expense.amount);
+        } else {
+          userPersonalExpensesByDate[expense.date] += parseFloat(
+            expense.amount
+          );
+        }
+      });
+      return userPersonalExpensesByDate;
+    }
+  }
 };
 </script>
