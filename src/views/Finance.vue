@@ -15,21 +15,56 @@
       </button>
     </div>
     </div>
-      <div class="financeDashboardCard" style="width: 18rem;">
-        <h3 class="card-title">Expenses</h3>
+      <div class="financeDashboardCard" style="width: 18rem;" v-show="!onlyViewCurrentUserExpenses">
+        <h3 class="card-title">Trip Expenses</h3>
         <div class="card expenseCard" v-for="expense in trip.expenses">
           <div class="card-body">
             <p>${{ expense.amount }} - {{ expense.description }}</p>
-            <a :href=" '#/expenses/' + expense.id " class="btn btn btn-link card-link">Edit</a>
-            <a :href=" '#' + expense.id " class="btn btn btn-link card-link">Split Expense</a>
           </div>
         </div>
-    </div>
+      </div>
+      <div class="financeDashboardCard" style="width: 18rem;" v-show="onlyViewCurrentUserExpenses">
+        <h3 class="card-title">Your Trip Expenses</h3>
+        <div class="card expenseCard" v-for="expense in trip.current_user_expenses">
+          <div class="card-body">
+            <p>${{ expense.amount }} - {{ expense.description }}</p>
+            <a :href=" '#/expenses/' + expense.id " class="btn btn btn-link card-link">Edit</a>
+            <!-- <a :href="'#'" class="btn btn btn-link card-link">Split Expense</a> -->
+            <button type="button" class="btn btn btn-link card-link" data-toggle="modal" data-target="#exampleModalCenter">
+              Split Expense
+            </button>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Split Expense</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <label>Recipient's Phone Number:</label>
+                      <input type="text" class="form-control" v-model="phone">
+                      <label>Message:</label>
+                      <input type="text" class="form-control" v-model="textBody">
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" v-on:click="onSubmit();">Send Text</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     <div class="financeDashboardCharts" v-show="!onlyViewCurrentUserExpenses">
       <div class="sumCard">
         <div><span class="bold">Total Spent on Trip: </span>${{ totalSum }}</div>
-        <div><span class="bold">Total Personal Spending: </span>$INSERT SUM</div>
-        <div class="finance-list-group-item"><span class="bold">Total Group Spending: </span>INSERT SUM</div>
+        <div><span class="bold">Total Personal Spending: </span>${{ personalSum }}</div>
+        <div class="finance-list-group-item"><span class="bold">Total Group Spending: </span>${{ groupSum }}</div>
       </div>
       <canvas id="doughnut-chart"></canvas>
       <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
@@ -37,9 +72,9 @@
     </div>
     <div class="financeDashboardCharts" v-show="onlyViewCurrentUserExpenses">
       <div class="sumCard">
-        <div><span class="bold">USER Total Spent on Trip: </span>${{ totalSum }}</div>
-        <div><span class="bold">USER Total Personal Spending: </span>$INSERT SUM</div>
-        <div class="finance-list-group-item"><span class="bold">USER Total Group Spending: </span>INSERT SUM</div>
+        <div><span class="bold">Total Spent on Trip: </span>${{ totalUserSum }}</div>
+        <div><span class="bold">Total Personal Spending: </span>${{ personalUserSum }}</div>
+        <div class="finance-list-group-item"><span class="bold">Total Group Spending: </span>${{ groupUserSum }}</div>
       </div>
       <canvas id="user-doughnut-chart"></canvas>
       <canvas id="user-bar-chart-grouped" width="800" height="450"></canvas>
@@ -64,8 +99,12 @@ export default {
       onlyViewCurrentUserExpenses: false,
       totalSum: 0,
       personalSum: 0,
-      groupSum: 0
-      // expenses: []
+      groupSum: 0,
+      totalUserSum: 0,
+      personalUserSum: 0,
+      groupUserSum: 0,
+      phone: "",
+      textBody: ""
     };
   },
   mounted: function() {
@@ -88,7 +127,13 @@ export default {
         this.createUserChartTotalSpendingPerDay();
         //add new charts before this set of puncuation marks
       });
-    this.totalSum = 100;
+
+    this.totalSum = 500;
+    this.personalSum = 500;
+    this.groupSum = 500;
+    this.totalUserSum = 100;
+    this.personalUserSum = 100;
+    this.groupUserSum = 100;
   },
   methods: {
     createChartTotalSpendingByCategory: function() {
@@ -283,7 +328,21 @@ export default {
     },
     toggleOnlyViewCurrentUserExpenses: function() {
       this.onlyViewCurrentUserExpenses = !this.onlyViewCurrentUserExpenses;
-    }
+    },
+    onSubmit: function() {
+      var params = {
+        phone: this.phone,
+        textBody: this.textBody
+      };
+      axios
+        .post("http://localhost:3000/api/sendtext", params)
+        .then(response => {
+          console.log("Success!");
+        })
+        .catch(error => {
+          this.errors = error.response.data.errors;
+        });
+    },
   },
   computed: {
     expensesByCategory: function() {
