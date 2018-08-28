@@ -43,7 +43,7 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <form>
+                    <form id="myForm">
                       <label>Recipient's Phone Number:</label>
                       <input type="text" class="form-control" v-model="phone">
                       <label>Message:</label>
@@ -338,6 +338,7 @@ export default {
         .post("http://localhost:3000/api/sendtext", params)
         .then(response => {
           console.log("Success!");
+          document.getElementById("myForm").reset();
         })
         .catch(error => {
           this.errors = error.response.data.errors;
