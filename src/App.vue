@@ -77,6 +77,13 @@
 .bold {
   font-weight: bold;
 }
+.italics {
+  font-style: italic;
+}
+.expenseCard .card-body .italics {
+  margin: 0px;
+  font-size: 13px;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -120,6 +127,20 @@
 .home-card-link-3 {
   float: center;
   margin: 15px;
+}
+.finance-card-link-1 {
+  float: center;
+}
+.finance-card-link-2 {
+  position: relative;
+  margin: 0px;
+}
+.finance-card-link-3 {
+  float: center;
+  margin: 0px;
+}
+.btn-link {
+  margin: 0px;
 }
 .modal-body {
   margin: 7.5px;

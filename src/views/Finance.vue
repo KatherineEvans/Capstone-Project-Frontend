@@ -19,7 +19,8 @@
         <h3 class="card-title">Trip Expenses</h3>
         <div class="card expenseCard" v-for="expense in trip.expenses">
           <div class="card-body">
-            <p>${{ expense.amount }} - {{ expense.description }}</p>
+            <p><span class="bold">{{ expense.amount | currency }}</span> - {{ expense.description }}</p>
+            <p class="italics">Paid for by: {{ expense.payer }}</p>
           </div>
         </div>
       </div>
@@ -27,12 +28,12 @@
         <h3 class="card-title">Your Trip Expenses</h3>
         <div class="card expenseCard" v-for="expense in trip.current_user_expenses">
           <div class="card-body">
-            <p>${{ expense.amount }} - {{ expense.description }}</p>
-            <a :href=" '#/expenses/' + expense.id " class="btn btn btn-link card-link">Edit</a>
-            <!-- <a :href="'#'" class="btn btn btn-link card-link">Split Expense</a> -->
-            <button type="button" class="btn btn btn-link card-link" data-toggle="modal" data-target="#exampleModalCenter">
+            <p><span class="bold">{{ expense.amount | currency }}</span> - {{ expense.description }}</p>
+            <a :href=" '#/expenses/' + expense.id " class="btn btn btn-link card-link finance-card-link-1">Edit</a>
+            <button type="button" class="btn btn btn-link card-link finance-card-link-2" data-toggle="modal" data-target="#exampleModalCenter">
               Split Expense
             </button>
+            <button class="btn btn btn-link card-link finance-card-link-3" v-on:click="deleteExpense(expense)">Delete</button>
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -161,6 +162,15 @@ export default {
             display: true,
             text: "Total Spending by Category"
           }
+          // tooltips: {
+          //   callbacks: {
+          //     label: function(tooltipItem, data) {
+          //       return "$" + Number(tooltipItem.yLabel).toFixed(0).replace(/./g, function(c, i, a) {
+          //         return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
+          //       });
+          //     }
+          // }
+          // }
         }
       });
     },
@@ -193,6 +203,33 @@ export default {
           title: {
             display: true,
             text: "Spending by Category - Group vs. Personal"
+          },
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  callback: function(value, index, values) {
+                    return "$" + value;
+                  },
+                }
+              }
+            ]
+          },
+          tooltips: {
+            callbacks: {
+              label: function(tooltipItem, data) {
+                return (
+                  "$" +
+                  Number(tooltipItem.yLabel)
+                    .toFixed(0)
+                    .replace(/./g, function(c, i, a) {
+                      return i > 0 && c !== "." && (a.length - i) % 3 === 0
+                        ? "," + c
+                        : c;
+                    })
+                );
+              }
+            }
           }
         }
       });
@@ -227,6 +264,33 @@ export default {
           title: {
             display: true,
             text: "Spending Per Day"
+          },
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  callback: function(value, index, values) {
+                    return "$" + value;
+                  }
+                }
+              }
+            ]
+          },
+          tooltips: {
+            callbacks: {
+              label: function(tooltipItem, data) {
+                return (
+                  "$" +
+                  Number(tooltipItem.yLabel)
+                    .toFixed(0)
+                    .replace(/./g, function(c, i, a) {
+                      return i > 0 && c !== "." && (a.length - i) % 3 === 0
+                        ? "," + c
+                        : c;
+                    })
+                );
+              }
+            }
           }
         }
       });
@@ -288,6 +352,33 @@ export default {
           title: {
             display: true,
             text: "Spending by Category - Group vs. Personal"
+          },
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  callback: function(value, index, values) {
+                    return "$" + value;
+                  }
+                }
+              }
+            ]
+          },
+          tooltips: {
+            callbacks: {
+              label: function(tooltipItem, data) {
+                return (
+                  "$" +
+                  Number(tooltipItem.yLabel)
+                    .toFixed(0)
+                    .replace(/./g, function(c, i, a) {
+                      return i > 0 && c !== "." && (a.length - i) % 3 === 0
+                        ? "," + c
+                        : c;
+                    })
+                );
+              }
+            }
           }
         }
       });
@@ -321,7 +412,34 @@ export default {
         options: {
           title: {
             display: true,
-            text: "Spending Per Day"
+            text: "Spending Per Day",
+          },
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  callback: function(value, index, values) {
+                    return "$" + value;
+                  }
+                }
+              }
+            ]
+          },
+          tooltips: {
+            callbacks: {
+              label: function(tooltipItem, data) {
+                return (
+                  "$" +
+                  Number(tooltipItem.yLabel)
+                    .toFixed(0)
+                    .replace(/./g, function(c, i, a) {
+                      return i > 0 && c !== "." && (a.length - i) % 3 === 0
+                        ? "," + c
+                        : c;
+                    })
+                );
+              }
+            }
           }
         }
       });
@@ -344,6 +462,17 @@ export default {
           this.errors = error.response.data.errors;
         });
     },
+    deleteExpense: function(inputExpense) {
+      axios
+        .delete("http://localhost:3000/api/expenses/" + inputExpense.id)
+        .then(
+          function(response) {
+            console.log(response.data);
+            var index = this.trip.current_user_expenses.indexOf(inputExpense);
+            this.expenses.splice(index, 1);
+          }.bind(this)
+        );
+    }
   },
   computed: {
     expensesByCategory: function() {
