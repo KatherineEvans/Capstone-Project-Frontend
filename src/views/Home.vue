@@ -44,6 +44,7 @@
             </div>
           </div>
           <div class="modal-footer">
+            <a class="btn btn-primary" id="emailGroup" href='mailto:katherine@email.com,mallory@email.com,russell@email.com,bailey@email.com,ali@email.com'>Group Email</a>
             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
           </div>
         </div>

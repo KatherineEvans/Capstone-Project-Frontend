@@ -14,8 +14,8 @@
           <div class="col-lg-6 offset-lg-3">
             <ul class="timeline">
               <li v-for=" itinerary in trip.itineraries">
-                <p>{{ itinerary.description }}</p>
-                <p>{{ itinerary.time }}</p>
+                <p class="bold">{{ itinerary.description }}</p>
+                <p class="italics small">{{ itinerary.time | moment("dddd, MMMM Do YYYY, h:mm a") }}</p>
               </li>
             </ul>
           </div>

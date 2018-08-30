@@ -128,16 +128,20 @@
   float: center;
   margin: 15px;
 }
-.finance-card-link-1 {
+.card-body .finance-card-link-1 {
   float: center;
 }
-.finance-card-link-2 {
+.card-body .finance-card-link-2 {
   position: relative;
-  margin: 0px;
+  margin-left: 0px;
 }
-.finance-card-link-3 {
+.card-body .finance-card-link-3 {
   float: center;
-  margin: 0px;
+  margin-left: 0px;
+  margin-right: 10px
+}
+.expenseCard .card-body {
+  padding-bottom: 10px;
 }
 .btn-link {
   margin: 0px;
@@ -244,7 +248,7 @@ ul.timeline:before {
     position: absolute;
     left: 29px;
     width: 2px;
-    height: 90%;
+    height: 94%;
     z-index: 400;
 }
 ul.timeline > li:before {
@@ -258,5 +262,26 @@ ul.timeline > li:before {
     width: 20px;
     height: 20px;
     z-index: 400;
+}
+.timeline li p {
+  margin: 0;
+}
+.timeline li {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 15px;
+  border-top-width: 1px;
+  border-color: black;
+  border-style: dashed;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+}
+.timeline .italics {
+  font-size: 13px;
+}
+#emailGroup {
+  background-color: #157FFB;
+  border-color: none;
 }
 </style>

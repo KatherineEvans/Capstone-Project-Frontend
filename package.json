@@ -13,6 +13,7 @@
     "tui-editor": "^1.2.6",
     "twilio": "^3.19.2",
     "vue": "^2.5.17",
+    "vue-moment": "^4.0.0",
     "vue-router": "^3.0.1",
     "vue2-filters": "^0.3.0"
   },

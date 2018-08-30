@@ -63,9 +63,9 @@
       </div>
     <div class="financeDashboardCharts" v-show="!onlyViewCurrentUserExpenses">
       <div class="sumCard">
-        <div><span class="bold">Total Spent on Trip: </span>${{ totalSum }}</div>
-        <div><span class="bold">Total Personal Spending: </span>${{ personalSum }}</div>
-        <div class="finance-list-group-item"><span class="bold">Total Group Spending: </span>${{ groupSum }}</div>
+        <div><span class="bold">Total Spent on Trip: </span>{{ totalSum | currency }}</div>
+        <div><span class="bold">Total Personal Spending: </span>{{ personalSum | currency }}</div>
+        <div class="finance-list-group-item"><span class="bold">Total Group Spending: </span>{{ groupSum | currency }}</div>
       </div>
       <canvas id="doughnut-chart"></canvas>
       <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
@@ -73,9 +73,9 @@
     </div>
     <div class="financeDashboardCharts" v-show="onlyViewCurrentUserExpenses">
       <div class="sumCard">
-        <div><span class="bold">Total Spent on Trip: </span>${{ totalUserSum }}</div>
-        <div><span class="bold">Total Personal Spending: </span>${{ personalUserSum }}</div>
-        <div class="finance-list-group-item"><span class="bold">Total Group Spending: </span>${{ groupUserSum }}</div>
+        <div><span class="bold">Total Spent on Trip: </span>{{ totalUserSum | currency }}</div>
+        <div><span class="bold">Total Personal Spending: </span>{{ personalUserSum | currency }}</div>
+        <div class="finance-list-group-item"><span class="bold">Total Group Spending: </span>{{ groupUserSum | currency }}</div>
       </div>
       <canvas id="user-doughnut-chart"></canvas>
       <canvas id="user-bar-chart-grouped" width="800" height="450"></canvas>
@@ -127,14 +127,25 @@ export default {
         this.createUserChartTotalSpendingGroupVsPersonal();
         this.createUserChartTotalSpendingPerDay();
         //add new charts before this set of puncuation marks
+        this.trip.expenses.forEach((expense) => {
+          this.totalSum += parseFloat(expense.amount);
+          if (expense.expense_type === "Personal") {
+            this.personalSum += parseFloat(expense.amount);
+          }
+          if (expense.expense_type === "Group") {
+            this.groupSum += parseFloat(expense.amount);
+          }
+        });
+        this.trip.current_user_expenses.forEach((cuexpense) =>{
+          this.totalUserSum += parseFloat(cuexpense.amount);
+          if (cuexpense.expense_type === "Personal") {
+            this.personalUserSum += parseFloat(cuexpense.amount);
+          }
+          if (cuexpense.expense_type === "Group") {
+            this.groupUserSum += parseFloat(cuexpense.amount);
+          }
+        });
       });
-
-    this.totalSum = 500;
-    this.personalSum = 500;
-    this.groupSum = 500;
-    this.totalUserSum = 100;
-    this.personalUserSum = 100;
-    this.groupUserSum = 100;
   },
   methods: {
     createChartTotalSpendingByCategory: function() {
@@ -144,14 +155,14 @@ export default {
           labels: Object.keys(this.expensesByCategory),
           datasets: [
             {
-              label: "Population (millions)",
+              label: "Total Spending by Category",
               backgroundColor: [
                 "#3e95cd",
                 "#8e5ea2",
                 "#3cba9f",
                 "#e8c3b9",
                 "#c45850",
-                "black"
+                "#FBD479"
               ],
               data: Object.values(this.expensesByCategory)
             }
@@ -161,16 +172,7 @@ export default {
           title: {
             display: true,
             text: "Total Spending by Category"
-          }
-          // tooltips: {
-          //   callbacks: {
-          //     label: function(tooltipItem, data) {
-          //       return "$" + Number(tooltipItem.yLabel).toFixed(0).replace(/./g, function(c, i, a) {
-          //         return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
-          //       });
-          //     }
-          // }
-          // }
+          },
         }
       });
     },
@@ -309,7 +311,7 @@ export default {
                 "#3cba9f",
                 "#e8c3b9",
                 "#c45850",
-                "black"
+                "#FBD479"
               ],
               data: Object.values(this.userExpensesByCategory)
             }

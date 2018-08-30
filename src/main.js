@@ -4,6 +4,8 @@ import router from "./router";
 import axios from "axios";
 import Vue2Filters from "vue2-filters";
 
+Vue.use(require("vue-moment"));
+
 var jwt = localStorage.getItem("jwt");
 if (jwt) {
   axios.defaults.headers.common["Authorization"] = jwt;
