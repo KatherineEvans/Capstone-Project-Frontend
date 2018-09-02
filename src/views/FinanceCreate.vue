@@ -1,12 +1,12 @@
 <template>
-  <div class="expenseCreate container">
+  <div class="container">
     <div id="nav">
       <router-link to="/home">Home</router-link> |
       <router-link to="/logout">Logout</router-link>
+    <h1 class="top-margin">Add Expense</h1>
     </div>
-    <div class="">
+    <div class="expenseCreate">
       <form v-on:submit.prevent="submit()">
-        <h1>Add Expense</h1>
         <ul>
           <li class="text-danger" v-for="error in errors">{{ error }}</li>
         </ul>

@@ -7,15 +7,17 @@
     <div class="itineraryHeader">
       <h1>{{ trip.itineraries[0].trip_name }}</h1>
       <h3>{{ message }}</h3>
+      <button type="button" class="btn btn-dark" onClick="window.location = '#/expenses';" v-model="trip.id">Add Itinerary Item</button>
     </div>
     <div>
-      <div class="container mt-5 mb-5">
-        <div class="row">
-          <div class="col-lg-6 offset-lg-3">
+      <div class="container" id="itineraryList">
+        <div class="row rowBackground">
+          <div>
             <ul class="timeline">
-              <li v-for=" itinerary in trip.itineraries">
+              <li v-for=" itinerary in trip.itineraries" v-on:click="toggleShowImage(itinerary)">
                 <p class="bold">{{ itinerary.description }}</p>
                 <p class="italics small">{{ itinerary.time | moment("dddd, MMMM Do YYYY, h:mm a") }}</p>
+                <img class="itineraryPhoto" v-bind:src="itinerary.photo" height="200" v-if="itinerary.show_image">
               </li>
             </ul>
           </div>
@@ -36,22 +38,28 @@ export default {
     return {
       message: "Trip Itinerary",
       trips: [],
-      trip: {},
+      trip: {itineraries: [{trip_name: "Loading..."}]},
       ininerary: {},
       itineraries: []
     };
   },
   created: function() {
     axios
-      .get("http://localhost:3000/api/trips/" + this.$route.params.id + "/itinerary")
+      .get(
+        "http://localhost:3000/api/trips/" +
+          this.$route.params.id +
+          "/itinerary"
+      )
       .then(response => {
         console.log("itineraries", response.data.itineraries);
         this.trip = response.data;
       });
   },
-  methods: {},
+  methods: {
+    toggleShowImage: function(itinerary) {
+      itinerary.show_image = !itinerary.show_image;
+    }
+  },
   computed: {}
 };
 </script>
-
-

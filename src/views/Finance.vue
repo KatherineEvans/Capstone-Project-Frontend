@@ -29,27 +29,29 @@
         <div class="card expenseCard" v-for="expense in trip.current_user_expenses">
           <div class="card-body">
             <p><span class="bold">{{ expense.amount | currency }}</span> - {{ expense.description }}</p>
-            <a :href=" '#/expenses/' + expense.id " class="btn btn btn-link card-link finance-card-link-1">Edit</a>
-            <button type="button" class="btn btn btn-link card-link finance-card-link-2" data-toggle="modal" data-target="#exampleModalCenter">
+            <a :href=" '#/expenses/' + expense.id " id="btn-sm" class="btn btn-link btn-sm card-link finance-card-link-1">Edit</a>
+            <button type="button" id="btn-sm" class="btn btn-link btn-sm card-link finance-card-link-2" data-toggle="modal" data-target="#exampleModalCenter">
               Split Expense
             </button>
-            <button class="btn btn btn-link card-link finance-card-link-3" v-on:click="deleteExpense(expense)">Delete</button>
+            <button id="btn-sm" class="btn btn-link btn-sm card-link finance-card-link-3" v-on:click="deleteExpense(expense)">Delete</button>
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Split Expense</h5>
+                    <h4 class="modal-title" id="exampleModalLongTitle">Split Expense</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
                   <div class="modal-body">
-                    <form id="myForm">
-                      <label>Recipient's Phone Number:</label>
-                      <input type="text" class="form-control" v-model="phone">
-                      <label>Message:</label>
+                    <h5>Select Recipient</h5>
+                    <select v-model="selectedPhoneNumber">
+                      <option v-for="traveler in trip.travelers" v-bind:value="traveler.phone" >
+                        {{ traveler.first_name }} {{ traveler.last_name }}
+                      </option>
+                    </select>
+                      <h5>Message:</h5>
                       <input type="text" class="form-control" v-model="textBody">
-                    </form>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -96,6 +98,8 @@ export default {
     return {
       message: "Financial Dashboard",
       trip: {},
+      traveler: {},
+      trips: [],
       itineraries: [],
       onlyViewCurrentUserExpenses: false,
       totalSum: 0,
@@ -105,7 +109,8 @@ export default {
       personalUserSum: 0,
       groupUserSum: 0,
       phone: "",
-      textBody: ""
+      textBody: "",
+      selectedPhoneNumber: ""
     };
   },
   mounted: function() {
@@ -118,7 +123,7 @@ export default {
     axios
       .get("http://localhost:3000/api/trips/" + this.$route.params.id)
       .then(response => {
-        console.log("expenses", response.data.expenses);
+        console.log("expenses", response.data.expenses, response.data);
         this.trip = response.data;
         this.createChartTotalSpendingByCategory();
         this.createChartTotalSpendingGroupVsPersonal();
@@ -127,7 +132,7 @@ export default {
         this.createUserChartTotalSpendingGroupVsPersonal();
         this.createUserChartTotalSpendingPerDay();
         //add new charts before this set of puncuation marks
-        this.trip.expenses.forEach((expense) => {
+        this.trip.expenses.forEach(expense => {
           this.totalSum += parseFloat(expense.amount);
           if (expense.expense_type === "Personal") {
             this.personalSum += parseFloat(expense.amount);
@@ -136,7 +141,7 @@ export default {
             this.groupSum += parseFloat(expense.amount);
           }
         });
-        this.trip.current_user_expenses.forEach((cuexpense) =>{
+        this.trip.current_user_expenses.forEach(cuexpense => {
           this.totalUserSum += parseFloat(cuexpense.amount);
           if (cuexpense.expense_type === "Personal") {
             this.personalUserSum += parseFloat(cuexpense.amount);
@@ -172,7 +177,7 @@ export default {
           title: {
             display: true,
             text: "Total Spending by Category"
-          },
+          }
         }
       });
     },
@@ -212,7 +217,7 @@ export default {
                 ticks: {
                   callback: function(value, index, values) {
                     return "$" + value;
-                  },
+                  }
                 }
               }
             ]
@@ -414,7 +419,7 @@ export default {
         options: {
           title: {
             display: true,
-            text: "Spending Per Day",
+            text: "Spending Per Day"
           },
           scales: {
             yAxes: [
@@ -451,7 +456,7 @@ export default {
     },
     onSubmit: function() {
       var params = {
-        phone: this.phone,
+        phone: this.selectedPhoneNumber,
         textBody: this.textBody
       };
       axios

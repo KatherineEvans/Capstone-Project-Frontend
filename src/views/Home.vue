@@ -14,9 +14,9 @@
           <h6 class="card-text">{{ trip.city }}, {{ trip.state }}, {{ trip.country }}</h6>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item"><span class="title-span">Planner: </span>{{ trip.planner }}</li>
-          <li class="list-group-item"><span class="title-span">Start: </span>{{ trip.start_date }}</li>
-          <li class="list-group-item"><span class="title-span">End: </span>{{ trip.end_date }}</li>
+          <li class="list-group-item"><span class="bold">Planner: </span>{{ trip.planner }}</li>
+          <li class="list-group-item"><span class="bold">Start: </span>{{ trip.start_date }}</li>
+          <li class="list-group-item"><span class="bold">End: </span>{{ trip.end_date }}</li>
         </ul>
         <div class="card-body card-body-buttons">
           <button type="button" class="btn btn-primary card-link home-card-link-1" data-toggle="modal" data-target="#exampleModal" v-on:click="currentTrip = trip">Travelers
@@ -40,7 +40,7 @@
             <div class="modal-body" v-for="traveler in currentTrip.travelers">
              <img class="travelerImage" v-bind:src="traveler.user_photo">
               <p class="modal-traveler-name">{{ traveler.first_name }} {{ traveler.last_name}}</p>
-              <a class="emailLink" :href="'mailto:' + traveler.email">{{ traveler.email }}</a>
+              <a class="bold" :href="'mailto:' + traveler.email">{{ traveler.email }}</a>
             </div>
           </div>
           <div class="modal-footer">
