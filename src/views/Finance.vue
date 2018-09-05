@@ -164,7 +164,7 @@ export default {
               backgroundColor: [
                 "#3e95cd",
                 "#8e5ea2",
-                "#3cba9f",
+                "#69C8CC",
                 "#e8c3b9",
                 "#c45850",
                 "#FBD479"
@@ -196,13 +196,15 @@ export default {
           datasets: [
             {
               label: "Personal",
-              backgroundColor: "#3e95cd",
-              data: Object.values(this.personalExpensesByCategory)
+              backgroundColor: "#9F9B9A",
+              data: Object.values(this.personalExpensesByCategoryId)
+              //Need to order by category ID
             },
             {
               label: "Group",
-              backgroundColor: "#8e5ea2",
-              data: Object.values(this.groupExpensesByCategory)
+              backgroundColor: "#43B99F",
+              data: Object.values(this.groupExpensesByCategoryId)
+              //Need to order by category ID
             }
           ]
         },
@@ -313,7 +315,7 @@ export default {
               backgroundColor: [
                 "#3e95cd",
                 "#8e5ea2",
-                "#3cba9f",
+                "#69C8CC",
                 "#e8c3b9",
                 "#c45850",
                 "#FBD479"
@@ -345,12 +347,12 @@ export default {
           datasets: [
             {
               label: "Personal",
-              backgroundColor: "#3e95cd",
+              backgroundColor: "#9F9B9A",
               data: Object.values(this.userPersonalExpensesByCategory)
             },
             {
               label: "Group",
-              backgroundColor: "#8e5ea2",
+              backgroundColor: "#43B99F",
               data: Object.values(this.userGroupExpensesByCategory)
             }
           ]
@@ -394,22 +396,22 @@ export default {
       new Chart(document.getElementById("user-line-chart"), {
         type: "line",
         data: {
-          labels: Object.keys(this.userExpensesByDate),
+          labels: Object.keys(this.userExpensesSortedByDate),
           datasets: [
             {
-              data: Object.values(this.userExpensesByDate),
+              data: Object.values(this.userExpensesSortedByDate),
               label: "Total",
               borderColor: "#3e95cd",
               fill: false
             },
             {
-              data: Object.values(this.userPersonalExpensesByDate),
+              data: Object.values(this.userPersonalExpensesSortedByDate),
               label: "Personal",
               borderColor: "#8e5ea2",
               fill: false
             },
             {
-              data: Object.values(this.userGroupExpensesByDate),
+              data: Object.values(this.userGroupExpensesSortedByDate),
               label: "Group",
               borderColor: "#3cba9f",
               fill: false
@@ -463,10 +465,12 @@ export default {
         .post("http://localhost:3000/api/sendtext", params)
         .then(response => {
           console.log("Success!");
+          alert("Text Sent!");
           document.getElementById("myForm").reset();
         })
         .catch(error => {
           this.errors = error.response.data.errors;
+          alert("Text Sent!");
         });
     },
     deleteExpense: function(inputExpense) {
@@ -542,6 +546,18 @@ export default {
       });
       return personalExpensesByCategory;
     },
+    personalExpensesByCategoryId: function() {
+      var personalExpensesByCategoryId = {};
+      this.trip.personal_expenses_category.forEach(function(expense) {
+        console.log(expense);
+        if (!personalExpensesByCategoryId[expense.personal_category_name]) {
+          personalExpensesByCategoryId[expense.personal_category_name] = parseFloat(expense.personal_amount);
+        } else {
+          personalExpensesByCategoryId[expense.personal_category_name] += parseFloat(expense.personal_amount);
+        }
+      });
+      return personalExpensesByCategoryId;
+    },
     userPersonalExpensesByCategory: function() {
       var userPersonalExpensesByCategory = {};
       this.trip.current_user_personal_expenses.forEach(function(expense) {
@@ -584,6 +600,18 @@ export default {
         }
       });
       return groupExpensesByCategory;
+    },
+    groupExpensesByCategoryId: function() {
+      var groupExpensesByCategoryId = {};
+      this.trip.group_expenses_category.forEach(function(expense) {
+        console.log(expense);
+        if (!groupExpensesByCategoryId[expense.group_category_name]) {
+          groupExpensesByCategoryId[expense.group_category_name] = parseFloat(expense.group_amount);
+        } else {
+          groupExpensesByCategoryId[expense.group_category_name] += parseFloat(expense.group_amount);
+        }
+      });
+      return groupExpensesByCategoryId;
     },
     userGroupExpensesByCategory: function() {
       var userGroupExpensesByCategory = {};
@@ -630,6 +658,18 @@ export default {
       });
       return userExpensesByDate;
     },
+    userExpensesSortedByDate: function() {
+      var userExpensesSortedByDate = {};
+      this.trip.current_user_expenses_date.forEach(function(expense) {
+        console.log(expense.date, expense.amount);
+        if (!userExpensesSortedByDate[expense.date]) {
+          userExpensesSortedByDate[expense.date] = parseFloat(expense.amount);
+        } else {
+          userExpensesSortedByDate[expense.date] += parseFloat(expense.amount);
+        }
+      });
+      return userExpensesSortedByDate;
+    },
     groupExpensesByDate: function() {
       var groupExpensesByDate = {};
       this.trip.group_expenses.forEach(function(expense) {
@@ -657,6 +697,18 @@ export default {
         }
       });
       return userGroupExpensesByDate;
+    },
+    userGroupExpensesSortedByDate: function() {
+      var userGroupExpensesSortedByDate = {};
+      this.trip.current_user_group_expenses_date.forEach(function(expense) {
+        console.log(expense.date, expense.amount);
+        if (!userGroupExpensesSortedByDate[expense.date]) {
+          userGroupExpensesSortedByDate[expense.date] = parseFloat(expense.amount);
+        } else {
+          userGroupExpensesSortedByDate[expense.date] += parseFloat(expense.amount);
+        }
+      });
+      return userGroupExpensesSortedByDate;
     },
     personalExpensesByDate: function() {
       var personalExpensesByDate = {};
@@ -691,6 +743,20 @@ export default {
         }
       });
       return userPersonalExpensesByDate;
+    },
+    userPersonalExpensesSortedByDate: function() {
+      var userPersonalExpensesSortedByDate = {};
+      this.trip.current_user_personal_expenses_date.forEach(function(expense) {
+        console.log(expense.date, expense.amount);
+        if (!userPersonalExpensesSortedByDate[expense.date]) {
+          userPersonalExpensesSortedByDate[expense.date] = parseFloat(expense.amount);
+        } else {
+          userPersonalExpensesSortedByDate[expense.date] += parseFloat(
+            expense.amount
+          );
+        }
+      });
+      return userPersonalExpensesSortedByDate;
     }
   }
 };
