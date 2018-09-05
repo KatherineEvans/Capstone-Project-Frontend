@@ -7,7 +7,7 @@
     <div class="itineraryHeader">
       <h1>{{ trip.itineraries[0].trip_name }}</h1>
       <h3>{{ message }}</h3>
-      <button type="button" class="btn btn-dark" onClick="window.location = '#/expenses';" v-model="trip.id">Add Itinerary Item</button>
+      <button type="button" class="btn btn-dark" onClick="window.location = '#/itinerary';" v-model="trip.id">Add Itinerary Item</button>
     </div>
     <div>
       <div class="container" id="itineraryList">
