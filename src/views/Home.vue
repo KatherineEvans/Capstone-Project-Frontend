@@ -5,6 +5,7 @@
       <router-link to="/logout">Logout</router-link>
     </div>
     <h1>{{ message }}</h1>
+    <button type="button" class="btn btn-primary" data-dismiss="modal">Add Trip</button>
     <div class="row">
       <div class="col-lg-4" v-for="trip in trips">
       <div class="card">
@@ -44,6 +45,7 @@
             </div>
           </div>
           <div class="modal-footer">
+            <button type="button" id="left" class="btn btn-primary" data-dismiss="modal">Add Traveler</button>
             <a class="btn btn-primary" id="emailGroup" href='mailto:katherine@email.com,mallory@email.com,russell@email.com,bailey@email.com,ali@email.com'>Group Email</a>
             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
           </div>

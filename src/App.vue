@@ -40,7 +40,10 @@
   background-color: #55433E;
   border-color: #55433E;
 }
-
+#left {
+  float: left;
+  background-color: green;
+}
 .signupBtn:hover {
   text-decoration: underline;
 }
@@ -123,7 +126,6 @@
 }
 #btn-sm:hover {
   color: #FFFAE7;
-
 }
 .btn:after {
   background-color: #55433E;
