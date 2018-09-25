@@ -8,6 +8,7 @@
 .landing {
   padding: 35px;
   border: 15px;
+  border-radius: 25px;
   background-color: rgba(168, 77, 62, 0.75);
   margin-top: 150px;
   margin-left: 150px;
@@ -119,7 +120,7 @@
   /*first value is X axis, second is Y axis, thrid is blur, fourth is color!*/
 }
 #btn-sm {
-  background-color: rgba(85, 67, 62, 0.45);
+  background-color: rgba(85, 67, 62, 0.55);
   color: #FFFAE7;
   opacity: 80%;
   border-width: 0px;

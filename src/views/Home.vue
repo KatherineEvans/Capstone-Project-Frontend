@@ -20,10 +20,10 @@
           <li class="list-group-item"><span class="bold">End: </span>{{ trip.end_date }}</li>
         </ul>
         <div class="card-body card-body-buttons">
-          <button type="button" class="btn btn-primary card-link home-card-link-1" data-toggle="modal" data-target="#exampleModal" v-on:click="currentTrip = trip">Travelers
+          <button type="button" id="btn-sm" class="btn btn-primary card-link home-card-link-1" data-toggle="modal" data-target="#exampleModal" v-on:click="currentTrip = trip">Travelers
           </button>
-          <a :href="'#/trips/' + trip.id + '/itinerary'" class="btn btn-secondary card-link home-card-link-2">Itinerary</a>
-          <a :href=" '#/trips/' + trip.id " class="btn btn-secondary card-link home-card-link-3">Financial Dashboard</a>
+          <a :href="'#/trips/' + trip.id + '/itinerary'" id="btn-sm" class="btn btn-secondary card-link home-card-link-2">Itinerary</a>
+          <a :href=" '#/trips/' + trip.id " id="btn-sm" class="btn btn-secondary card-link home-card-link-3">Financial Dashboard</a>
         </div>
       </div>
     </div>
