@@ -5,7 +5,7 @@
       <router-link to="/logout">Logout</router-link>
     </div>
     <h1>{{ message }}</h1>
-    <button type="button" class="btn btn-primary" data-dismiss="modal">Add Trip</button>
+    <a :href="'#/createtrip/'" id="btn-sm" class="btn btn-primary" data-dismiss="modal">Add Trip</a>
     <div class="row">
       <div class="col-lg-4" v-for="trip in trips">
       <div class="card">

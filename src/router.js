@@ -10,6 +10,7 @@ import FinanceCreate from "./views/FinanceCreate.vue";
 import FinanceEdit from "./views/FinanceEdit.vue";
 import Itinerary from "./views/Itinerary.vue";
 import ItineraryCreate from "./views/ItineraryCreate.vue";
+import TripsCreate from "./views/TripsCreate.vue";
 
 Vue.use(Router);
 
@@ -44,6 +45,11 @@ export default new Router({
       path: "/trips/:id",
       name: "finance",
       component: Finance
+    },
+    {
+      path: "/createtrip",
+      name: "TripsCreate",
+      component: TripsCreate
     },
     {
       path: "/expenses",

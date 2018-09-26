@@ -58,7 +58,7 @@ export default {
       axios
         .post("http://localhost:3000/api/travelers", params)
         .then(response => {
-          this.$router.push("/login");
+          this.$router.push("/home");
         })
         .catch(error => {
           this.errors = error.response.data.errors;
