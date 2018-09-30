@@ -63,16 +63,9 @@ export default {
       start_date: "",
       end_date: "",
       image: "", 
-      trip: this.trip
     };
   },
   mounted: function() {
-    // axios.get("http://localhost:3000/api/trips").then(
-    //   function(response) {
-    //     console.log(response);
-    //     this.trips = response.data.trips;
-    //   }.bind(this)
-    // );
   },
   methods: {
     submit: function() {
@@ -89,27 +82,21 @@ export default {
       axios
         .post("http://localhost:3000/api/trips", params)
         .then(response => {
-          axios.get("http://localhost:3000/api/trips").then(
-            function(response) {
-              console.log(response);
-              this.trips = response.data.trips;
-            }.bind(this)
-          );
-        })
-        .catch(error => {
-          this.errors = error.response.data.errors;
-        });
-      var paramsTwo = {
-        trip_id: this.trip.id
-      };
-      axios
-        .post("http://localhost:3000/api/usertrips", paramsTwo)
-        .then(response => {
-          this.$router.go("/home");
-        })
-        .catch(error => {
-          this.errors = error.response.data.errors;
-        });
+          console.log(response);
+          this.trip = response.data;
+          var paramsTwo = {
+            trip_id: this.trip.id
+          };
+          axios
+            .post("http://localhost:3000/api/usertrips", paramsTwo)
+            .then(response => {
+              this.$router.go("/home");
+            })
+            .catch(error => {
+              this.errors = error.response.data.errors;
+            });
+        }
+        );
     }
   }
 };
