@@ -43,7 +43,7 @@
 }
 #left {
   float: left;
-  background-color: green;
+  background-color: #55433E;
 }
 .signupBtn:hover {
   text-decoration: underline;

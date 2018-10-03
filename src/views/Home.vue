@@ -45,9 +45,28 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" id="left" class="btn btn-primary" data-dismiss="modal">Add Traveler</button>
+            <button type="button" id="left" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#travelerModal">Add Traveler</button>
             <a class="btn btn-primary" id="emailGroup" href='mailto:katherine@email.com,mallory@email.com,russell@email.com,bailey@email.com,ali@email.com'>Group Email</a>
             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="travelerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title" id="exampleModalLabel">Invite Traveler</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div>
+            TEST
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="left" class="btn btn-primary">Send</button>
           </div>
         </div>
       </div>
