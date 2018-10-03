@@ -74,7 +74,7 @@
             </div>
           </div>
           <div class="modal-footer traveler_modal-form">
-            <button type="button" id="left" class="btn btn-primary">Send</button>
+            <input type="submit" class="btn btn-primary" value="Send">
           </div>
         </div>
       </div>
@@ -97,6 +97,7 @@ export default {
       first_name: "",
       last_name: "",
       email: "", 
+      password: "password",
       currentTrip: {}
     };
   },
@@ -107,8 +108,26 @@ export default {
         this.trips = response.data.trips;
       }.bind(this)
     );
+
   },
-  methods: {},
+  methods: {
+    submit: function() {
+      var params = {
+        first_name: this.first_name,
+        last_name: this.last_name,
+        email: this.email,
+        password: this.password
+      };
+      axios
+        .post("http://localhost:3000/api/travelers", params)
+        .then(response => {
+          
+        })
+        .catch(error => {
+          this.errors = error.response.data.errors;
+        });
+    }
+  },
   computed: {}
 };
 </script>
