@@ -195,6 +195,9 @@
 .expenseCard {
   background-color: rgba(255, 250, 231, 0.85);
 }
+.traveler_modal-form {
+  padding: 20px 20px 20px 20px;
+}
 #doughnut-chart {
   width: 100px;
   height: 150px;

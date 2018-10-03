@@ -45,14 +45,14 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" id="left" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#travelerModal">Add Traveler</button>
+            <button type="button" id="left" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target=".traveler">Add Traveler</button>
             <a class="btn btn-primary" id="emailGroup" href='mailto:katherine@email.com,mallory@email.com,russell@email.com,bailey@email.com,ali@email.com'>Group Email</a>
             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
     </div>
-    <div class="modal fade" id="travelerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="traveler modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -62,10 +62,18 @@
             </button>
           </div>
           <div>
-            TEST
+           <div class="form-group traveler_modal-form">
+              <label>First Name:</label> 
+              <input type="text" placeholder="First Name" class="form-control" v-model="first_name">
+              <label>Last Name:</label> 
+              <input type="text" placeholder="Last Name" class="form-control" v-model="last_name">
+            </div>
+            <div class="form-group traveler_modal-form">
+            <label>Email Address:</label> 
+              <input type="text" placeholder="Email" class="form-control traveler_modal-form" v-model="email">
             </div>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer traveler_modal-form">
             <button type="button" id="left" class="btn btn-primary">Send</button>
           </div>
         </div>
@@ -86,6 +94,9 @@ export default {
       trips: [],
       itineraries: [],
       expenses: [],
+      first_name: "",
+      last_name: "",
+      email: "", 
       currentTrip: {}
     };
   },
