@@ -315,6 +315,11 @@ ul.timeline > li:before {
   background-color: #55433E;
   border-color: #55433E;
 }
+.profile-image {
+  width: 35px;
+  float: right;
+  border-width: 2px;
+}
 .rowBackground {
   border-radius: 25px;
   background-color: #95594c;

@@ -11,6 +11,7 @@ import FinanceEdit from "./views/FinanceEdit.vue";
 import Itinerary from "./views/Itinerary.vue";
 import ItineraryCreate from "./views/ItineraryCreate.vue";
 import TripsCreate from "./views/TripsCreate.vue";
+import Profile from "./views/Profile.vue";
 
 Vue.use(Router);
 
@@ -70,6 +71,11 @@ export default new Router({
       path: "/itinerary",
       name: ItineraryCreate,
       component: ItineraryCreate
+    },
+    {
+      path: "/profile",
+      name: Profile,
+      component: Profile
     }
   ]
 });
