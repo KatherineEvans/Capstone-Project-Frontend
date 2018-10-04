@@ -97,7 +97,6 @@ export default {
       first_name: "",
       last_name: "",
       email: "", 
-      password: "password",
       currentTrip: {}
     };
   },
@@ -112,11 +111,13 @@ export default {
   },
   methods: {
     submit: function() {
+      let yourPassword = Math.random().toString(36).substring(5);
       var params = {
         first_name: this.first_name,
         last_name: this.last_name,
         email: this.email,
-        password: this.password
+        password: yourPassword,
+        password_confirmation: yourPassword
       };
       axios
         .post("http://localhost:3000/api/travelers", params)
