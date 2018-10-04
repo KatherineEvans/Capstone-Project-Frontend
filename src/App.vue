@@ -316,7 +316,7 @@ ul.timeline > li:before {
   border-color: #55433E;
 }
 .profile-image {
-  width: 35px;
+  width: 20px;
   float: right;
   border-width: 2px;
 }
