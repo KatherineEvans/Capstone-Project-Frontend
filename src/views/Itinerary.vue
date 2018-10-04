@@ -3,6 +3,7 @@
     <div id="nav">
       <router-link to="/home">Home</router-link> |
       <router-link to="/logout">Logout</router-link>
+      <a href="#/profile"><img class="profile-image" src="../profile_img2.png"></a>
     </div>
     <div class="itineraryHeader">
       <h1>{{ trip.itineraries[0].trip_name }}</h1>

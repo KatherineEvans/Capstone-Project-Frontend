@@ -3,6 +3,7 @@
     <div id="nav">
       <router-link to="/home">Home</router-link> |
       <router-link to="/logout">Logout</router-link>
+      <a href="#/profile"><img class="profile-image" src="../profile_img2.png"></a>
     <h1 class="top-margin">Add Itinerary Item</h1>
     </div>
     <div class="expenseCreate">

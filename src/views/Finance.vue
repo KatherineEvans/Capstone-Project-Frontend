@@ -3,6 +3,7 @@
     <div id="nav">
       <router-link to="/home">Home</router-link> |
       <router-link to="/logout">Logout</router-link>
+      <a href="#/profile"><img class="profile-image" src="../profile_img2.png"></a>
     </div>
     <h1>{{ message }}</h1>
     <div class="finance-header container">
