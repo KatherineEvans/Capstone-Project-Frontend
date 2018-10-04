@@ -9,11 +9,10 @@
     </div>
     <div class="card" style="width: 18rem;">
       <div class="card-body">
-        <h5 class="card-title" v-for="current_user in profile">{{ current_user.name }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+        <h5 class="card-title">{{ profile.name }}</h5>
+        <img id="card-img-modal" class="card-img-top" v-bind:src="profile.photo" alt="Card image cap">
+        <h5 class="card-text">{{ profile.email }}</h5>
+        <a href="#" class="card-link">Edit</a>
       </div>
     </div>
   </div>
@@ -32,12 +31,13 @@ export default {
       users: [],
       trips: [],
       profile: this.profile,
+      name: ""
     };
   },
   created: function() {
     axios.get("http://localhost:3000/api/travelers/1").then(response => {
-      console.log("User Profile", response.data);
       this.profile = response.data;
+      console.log("User Profile", this.profile);
     });
   },
   methods: {},
