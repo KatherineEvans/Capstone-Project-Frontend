@@ -5,13 +5,15 @@
       <router-link to="/logout">Logout</router-link>
     </div>
     <div class="profileHeader">
-      <h3>{{ message }}</h3>
+      <h1>{{ message }}</h1>
     </div>
-    <div class="card" style="width: 18rem;">
+    <div id="profile-card" class="card">
       <div class="card-body">
         <h5 class="card-title">{{ profile.name }}</h5>
-        <img id="card-img-modal" class="card-img-top" v-bind:src="profile.photo" alt="Card image cap">
-        <h5 class="card-text">{{ profile.email }}</h5>
+        <img id="profile_photo" class="card-img-top" v-bind:src="profile.photo" alt="Card image cap">
+        <p class="card-text"><strong>Bio:</strong> {{ profile.bio }}</p>
+        <h6 class="card-text"><strong>Email:</strong> {{ profile.email }}</h6>
+        <h6 class="card-text"><strong>Phone:</strong> {{ profile.phone }}</h6>
         <a href="#" class="card-link">Edit</a>
       </div>
     </div>
@@ -31,7 +33,6 @@ export default {
       users: [],
       trips: [],
       profile: this.profile,
-      name: ""
     };
   },
   created: function() {

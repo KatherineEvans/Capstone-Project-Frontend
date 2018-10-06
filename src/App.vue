@@ -320,6 +320,14 @@ ul.timeline > li:before {
   float: right;
   border-width: 2px;
 }
+#profile_photo {
+margin-bottom: 20px;
+}
+#profile-card {
+  margin: auto;
+  width: 40%;
+  margin-top: 35px;
+}
 .rowBackground {
   border-radius: 25px;
   background-color: #95594c;
