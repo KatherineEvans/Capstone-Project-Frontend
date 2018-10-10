@@ -9,12 +9,18 @@
     </div>
     <div id="profile-card" class="card">
       <div class="card-body">
-        <h5 class="card-title">{{ profile.name }}</h5>
+        <h3 class="card-title">{{ profile.name }}</h3>
         <img id="profile_photo" class="card-img-top" v-bind:src="profile.photo" alt="Card image cap">
         <p class="card-text"><strong>Bio:</strong> {{ profile.bio }}</p>
         <h6 class="card-text"><strong>Email:</strong> {{ profile.email }}</h6>
         <h6 class="card-text"><strong>Phone:</strong> {{ profile.phone }}</h6>
         <a href="#" class="card-link">Edit</a>
+      </div>
+    </div>
+    <div id="profile-card" class="card">
+      <div class="card-body">
+        <h3 class="card-title">Upcoming Trips:</h3>
+        <a href="#/home" class="card-link">Home</a>
       </div>
     </div>
   </div>
@@ -33,10 +39,12 @@ export default {
       users: [],
       trips: [],
       profile: this.profile,
+      user: this.current_user,
+      id: user.id,
     };
   },
   created: function() {
-    axios.get("http://localhost:3000/api/travelers/1").then(response => {
+    axios.get("http://localhost:3000/api/travelers/" + id).then(response => {
       this.profile = response.data;
       console.log("User Profile", this.profile);
     });

@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/home">Home</router-link> |
       <router-link to="/logout">Logout</router-link>
-      <a href="#/profile"><img class="profile-image" src="../profile_img2.png"></a>
+      <a href="#/profile" v-on:click="id = current_user.id"><img class="profile-image" src="../profile_img2.png"></a>
     </div>
     <h1>{{ message }}</h1>
     <a :href="'#/createtrip/'" id="btn-sm" class="btn btn-primary" data-dismiss="modal">Add Trip</a>
