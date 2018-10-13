@@ -196,7 +196,7 @@
   background-color: rgba(255, 250, 231, 0.85);
 }
 .traveler_modal-form {
-  padding: 20px 20px 20px 20px;
+  padding: 5px 20px 5px 20px;
 }
 #doughnut-chart {
   width: 100px;

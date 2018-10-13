@@ -40,11 +40,10 @@ export default {
       trips: [],
       profile: this.profile,
       user: this.current_user,
-      id: user.id,
     };
   },
   created: function() {
-    axios.get("http://localhost:3000/api/travelers/" + id).then(response => {
+    axios.get("http://localhost:3000/api/travelers/1").then(response => {
       this.profile = response.data;
       console.log("User Profile", this.profile);
     });

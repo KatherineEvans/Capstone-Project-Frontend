@@ -68,9 +68,7 @@
               <input type="text" placeholder="First Name" class="form-control" v-model="first_name">
               <label>Last Name:</label> 
               <input type="text" placeholder="Last Name" class="form-control" v-model="last_name">
-            </div>
-            <div class="form-group traveler_modal-form">
-            <label>Email Address:</label> 
+              <label>Email Address:</label> 
               <input type="text" placeholder="Email" class="form-control traveler_modal-form" v-model="email">
             </div>
           </div>
