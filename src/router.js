@@ -73,7 +73,7 @@ export default new Router({
       component: ItineraryCreate
     },
     {
-      path: "/profile",
+      path: "/profile/:id",
       name: Profile,
       component: Profile
     }

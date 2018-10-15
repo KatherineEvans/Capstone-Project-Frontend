@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/home">Home</router-link> |
       <router-link to="/logout">Logout</router-link>
-      <a href="#/profile" v-on:click="id = current_user.id"><img class="profile-image" src="../profile_img2.png"></a>
+      <a :href="'#/profile/' + trips[0].user "><img class="profile-image" src="../profile_img2.png"></a>
     </div>
     <h1>{{ message }}</h1>
     <a :href="'#/createtrip/'" id="btn-sm" class="btn btn-primary" data-dismiss="modal">Add Trip</a>
@@ -73,7 +73,7 @@
             </div>
           </div>
           <div class="modal-footer traveler_modal-form">
-            <input type="submit" class="btn btn-primary" value="Send">
+            <input type="submit" class="btn btn-primary" value="Send" v-on:submit.prevent="submit()">
           </div>
         </div>
       </div>
@@ -95,7 +95,8 @@ export default {
       expenses: [],
       first_name: "",
       last_name: "",
-      email: "", 
+      email: "",
+      user: "",
       currentTrip: {}
     };
   },
@@ -106,11 +107,13 @@ export default {
         this.trips = response.data.trips;
       }.bind(this)
     );
-
+    // axios.get("http://localhost:3000/api/profile/");
   },
   methods: {
     submit: function() {
-      let yourPassword = Math.random().toString(36).substring(5);
+      let yourPassword = Math.random()
+        .toString(36)
+        .substring(5);
       var params = {
         first_name: this.first_name,
         last_name: this.last_name,
@@ -120,9 +123,7 @@ export default {
       };
       axios
         .post("http://localhost:3000/api/travelers", params)
-        .then(response => {
-          
-        })
+        .then(response => {})
         .catch(error => {
           this.errors = error.response.data.errors;
         });

@@ -43,7 +43,7 @@ export default {
     };
   },
   created: function() {
-    axios.get("http://localhost:3000/api/travelers/1").then(response => {
+    axios.get("http://localhost:3000/api/profile/" + this.$route.params.id).then(response => {
       this.profile = response.data;
       console.log("User Profile", this.profile);
     });
