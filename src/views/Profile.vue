@@ -28,7 +28,7 @@
             <div>
              <div class="form-group traveler_modal-form">
                 <label>First Name:</label> 
-                <input type="text" placeholder="profile.first_name" class="form-control" v-model="first_name">
+                <input type="text" class="form-control" v-model="first_name">
                 <label>Last Name:</label> 
                 <input type="text" placeholder="Last Name" class="form-control" v-model="last_name">
                 <label>Email Address:</label> 
@@ -42,9 +42,9 @@
                 <label>Confirm Password:</label> 
                 <input type="text" placeholder="Bio" class="form-control traveler_modal-form" v-model="password_confirmation">
               </div>
-            </div>
-            <div class="modal-footer traveler_modal-form">
-              <input type="submit" class="btn btn-primary" value="Send" v-on:submit.prevent="submit()">
+              <div class="modal-footer traveler_modal-form">
+                <input type="submit" class="btn btn-primary" value="Update" v-on:submit.prevent="submit()">
+              </div>
             </div>
           </div>
         </div>

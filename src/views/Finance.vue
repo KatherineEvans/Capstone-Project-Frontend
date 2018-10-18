@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/home">Home</router-link> |
       <router-link to="/logout">Logout</router-link>
-      <a href="#/profile"><img class="profile-image" src="../profile_img2.png"></a>
+      <!-- <a :href="'#/profile/' + trips[0].user "><img class="profile-image" src="../profile_img2.png"></a> -->
     </div>
     <h1>{{ message }}</h1>
     <div class="finance-header container">
@@ -34,7 +34,7 @@
             <button type="button" id="btn-sm" class="btn btn-link btn-sm card-link finance-card-link-2" data-toggle="modal" data-target="#exampleModalCenter">
               Split Expense
             </button>
-            <button id="btn-sm" class="btn btn-link btn-sm card-link finance-card-link-3" v-on:click="deleteExpense(expense)">Delete</button>
+            <button id="btn-sm" class="btn btn-link btn-sm card-link finance-card-link-3" v-on:click="deleteExpense(expense);window.location.reload();">Delete</button>
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -482,7 +482,7 @@ export default {
             console.log(response.data);
             var index = this.trip.current_user_expenses.indexOf(inputExpense);
             this.expenses.splice(index, 1);
-          }.bind(this)
+          }.bind(this).then(window.location.refresh())
         );
     }
   },

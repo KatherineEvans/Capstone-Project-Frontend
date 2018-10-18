@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/home">Home</router-link> |
       <router-link to="/logout">Logout</router-link>
-      <a href="#/profile"><img class="profile-image" src="../profile_img2.png"></a>
+      <!-- <a :href="'#/profile/' + trips[0].user "><img class="profile-image" src="../profile_img2.png"></a> -->
     <h1 class="top-margin">Add Trip</h1>
     </div>
     <div class="expenseCreate">
@@ -91,7 +91,7 @@ export default {
           axios
             .post("http://localhost:3000/api/usertrips", paramsTwo)
             .then(response => {
-              this.$router.go("/home");
+              this.$router.go(-1);
             })
             .catch(error => {
               this.errors = error.response.data.errors;

@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/home">Home</router-link> |
       <router-link to="/logout">Logout</router-link>
-      <a href="#/profile"><img class="profile-image" src="../profile_img2.png"></a>
+     <!--  <a :href="'#/profile/' + trips[0].user "><img class="profile-image" src="../profile_img2.png"></a> -->
     </div>
     <div class="itineraryHeader">
       <h1>{{ trip.itineraries[0].trip_name }}</h1>
@@ -17,7 +17,7 @@
             <ul class="timeline">
               <li v-for=" itinerary in trip.itineraries" v-on:click="toggleShowImage(itinerary)">
                 <p class="bold">{{ itinerary.description }}</p>
-                <p class="italics small">{{ itinerary.time | moment("dddd, MMMM Do YYYY, h:mm a") }}</p>
+                <p class="italics small">{{ itinerary.time | moment("dddd, MMMM Do YYYY, h:mm a")}}</p>
                 <img class="itineraryPhoto" v-bind:src="itinerary.photo" height="200" v-if="itinerary.show_image">
               </li>
             </ul>
@@ -33,6 +33,7 @@
 
 <script>
 var axios = require("axios");
+import moment from "moment-timezone";
 
 export default {
   data: function() {

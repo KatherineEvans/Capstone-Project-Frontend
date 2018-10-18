@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/home">Home</router-link> |
       <router-link to="/logout">Logout</router-link>
-      <a href="#/profile"><img class="profile-image" src="../profile_img2.png"></a>
+      <!-- <a :href="'#/profile/' + trips[0].user "><img class="profile-image" src="../profile_img2.png"></a> -->
     </div>
     <div class="">
       <form v-on:submit.prevent="submit()">
